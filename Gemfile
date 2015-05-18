@@ -9,6 +9,13 @@ group :development, :test do
   gem 'coffee-script-source', '1.8.0'
 end
 
+group :production do
+
+# Use Unicorn as the app server
+  gem 'pg'
+end
+
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
