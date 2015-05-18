@@ -46,3 +46,9 @@
   letter-spacing: 1px;
   content: "Example";
 }
+
+td.edit_delete, th.edit_delete{
+	width: 45px;
+	padding-right: 4px !important;
+	padding-left: 4px !important;
+}

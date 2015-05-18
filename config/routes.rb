@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  resources :elements
+
+  resources :layouts
+
   resources :users
   resources :whouses
 
