@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Whlayout</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <title>Warehouse & layouts </title>
+  <%= javascript_include_tag "application" %> 
+  <%= stylesheet_link_tag    "application", media: "all" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+<div class="container-all">
+
+<% if current_user %>
+  <%= render "menu" %>
+<% end %>
+
+<div class="container">
+  <div class="flash">
+      <%= bootstrap_flash %>
+  </div>
+</div>
+
+<div class="container bs-docs-container">
+	<%= yield %>
+</div>
 
 </body>
 </html>

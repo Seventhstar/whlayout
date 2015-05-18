@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Whouses</h1>
+
+<div class="bs-example" data-example-id="simple-table">
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @whouses.each do |whouse| %>
+      <tr>
+        <td><%= whouse.name %></td>
+        <%= edit_delete(whouse) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Whouse', new_whouse_path, class: "btn btn-success" %>
+
+</div>
