@@ -19,5 +19,44 @@
 
 
 $(function() {
-	$('#layout_element_element_id').chosen();
+	$('#lay_el_element_id').chosen();
+  $('#wh_el_element_id').chosen();
+
+  $('.options-menu a').click(function(){ 
+      $('.options-menu a.active').removeClass("active", 150, "easeInQuint");
+      $(this).addClass("active");
+      var url = "/" + $(this).attr("controller");
+      $.get(url, null, null, "script");
+      if (url!="/undefined") setLoc("options"+url);
+  });
+
+
+  $(document).on('click','#btn-send',function(e) {  
+    
+    var valuesToSubmit = $('form').serialize();
+    var values = $('form').serialize();
+    var url = $('form').attr('action');
+    var empty_name = false;
+    //alert(values);
+    each(q2ajx(values), function(i, a) {
+      if (i.indexOf("[name]") >0  && a=="" ) { empty_name = true; return false; }
+    });
+
+    if (!empty_name){
+    $.ajax({
+        type: "POST",
+        url: url, //sumbits it to the given url of the form
+        data: valuesToSubmit,
+        dataType: 'JSON',  
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},         
+        success: function(){
+          $.get(url, null, null, "script");
+      }
+    });
+    }
+    });
+
+
 });
+
+    

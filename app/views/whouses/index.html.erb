@@ -2,27 +2,34 @@
 
 <h1>Список складов</h1>
 
-<div class="bs-example" data-example-id="simple-table">
+<% @whouses.each do |whouse| %>
+
+<div class="panel panel-default">
+
+<div class="panel-heading table-heading"><%= link_to whouse.name,whouse %></div>
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th>Name</th>
+      <th>Элемент</th>
+      <th>Количество</th>
       <th></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @whouses.each do |whouse| %>
+      <% whouse.whouse_elements.each do |el| %>
       <tr>
-        <td><%= whouse.name %></td>
-        <%= edit_delete(whouse) %>
+        <td>el.id</td>
+        <td>el.count</td>
+        <td></td>
+        
       </tr>
-    <% end %>
+      <% end %>
   </tbody>
 </table>
-
+</div>
+<% end %>
 <br>
 
 <%= link_to 'Новый склад', new_whouse_path, class: "btn btn-success" %>
 
-</div>

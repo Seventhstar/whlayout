@@ -15,6 +15,9 @@ class OptionsController < ApplicationController
     when "elements"
       @items = Element.order(:name)
       @item  = Element.new
+    when "whouses"
+      @items = Whouse.order(:name)
+      @item  = Whouse.new
     else
       puts "You gave me #{a} -- I have no idea what to do with that."
     end

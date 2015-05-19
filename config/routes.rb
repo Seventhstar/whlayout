@@ -19,9 +19,12 @@ Rails.application.routes.draw do
   resources :password_resets,     only: [:new, :create, :edit, :update]
 
   post "ajax/add_lay_el"
+  post "ajax/del_lay_el"
+  post "ajax/add_wh_el"
+  post "ajax/del_wh_el"
+
   get    'options'  => 'options#edit'
   get    'options/:options_page'  => 'options#edit'
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -6,6 +6,10 @@ class ElementsController < ApplicationController
   def index
     @elements = Element.all
     @element = Element.new
+
+    @items  = Element.order(:name)  
+    @item = Element.new
+
   end
 
   # GET /elements/1
@@ -29,7 +33,7 @@ class ElementsController < ApplicationController
 
     respond_to do |format|
       if @element.save
-        format.html { redirect_to elements_url, notice: 'Element was successfully created.' }
+        format.html { redirect_to '/options/elements', notice: 'Element was successfully created.' }
         format.json { render :show, status: :created, location: @element }
       else
         format.html { render :new }
@@ -43,7 +47,7 @@ class ElementsController < ApplicationController
   def update
     respond_to do |format|
       if @element.update(element_params)
-        format.html { redirect_to elements_url, notice: 'Element was successfully updated.' }
+        format.html { redirect_to '/options/elements', notice: 'Element was successfully updated.' }
         format.json { render :show, status: :ok, location: @element }
       else
         format.html { render :edit }
@@ -57,7 +61,7 @@ class ElementsController < ApplicationController
   def destroy
     @element.destroy
     respond_to do |format|
-      format.html { redirect_to elements_url, notice: 'Element was successfully destroyed.' }
+      format.html { redirect_to '/options/elements', notice: 'Element was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

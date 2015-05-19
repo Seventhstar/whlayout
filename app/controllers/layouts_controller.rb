@@ -10,9 +10,10 @@ class LayoutsController < ApplicationController
   # GET /layouts/1
   # GET /layouts/1.json
   def show
-    @layout_elements = @layout.elements
-    @layout_element = @layout.layout_elements.new
-    @elements = Element.all
+    @layout_elements = @layout.layout_elements
+    
+    @elements = Element.order(:name)
+    #@layout_element = @layout.layout_elements.new
   end
 
   # GET /layouts/new

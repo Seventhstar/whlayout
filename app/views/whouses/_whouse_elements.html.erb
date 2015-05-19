@@ -4,18 +4,18 @@
 
   <thead>
     <tr>
-      <th>Компоненты:</th>
+      <th>Детали:</th>
       <th>Количество</th>
       <th></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @layout_elements.each do |lay_el| %>
+    <% @whouse_elements.each do |wh_el| %>
       <tr>
-        <td><%= element_name(lay_el) %></td>
-        <td><%= lay_el.count %></td>
-        <%= td_span_delete(lay_el) %>
+        <td><%= element_name(wh_el) %></td>
+        <td><%= wh_el.count %></td>
+        <%= td_span_delete(wh_el) %>
       </tr>
     <% end %>
   </tbody>

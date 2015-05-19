@@ -5,6 +5,18 @@ module ApplicationHelper
   end
 
 
+  def td_delete(element,subcount = nil)
+    content_tag :td,{:class=>"edit_delete"} do
+      de = link_to image_tag('delete.png'), element, method: :delete, data: { confirm: 'Действительно удалить?' }
+    end
+  end
+
+  def td_span_delete(element,subcount = nil)
+    content_tag :td,{:class=>"edit_delete"} do
+      de = content_tag :span, "",{class: 'delete', el_id: element.id}
+    end
+  end
+
   def edit_delete(element,subcount = nil)
     content_tag :td,{:class=>"edit_delete"} do
      #ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit"
