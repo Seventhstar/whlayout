@@ -53,6 +53,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :elements, 'Элементы', '/elements'
     primary.item :whouses, 'Склады', '/whouses'
     primary.item :layouts, 'Схемы', '/layouts'
+    primary.item :elements, image_tag('options.png'), '/options/elements', :class => 'li-right options'
 
     # Add an item which has a sub navigation (same params, but with block)
 #    primary.item :key_2, 'name', url, options do |sub_nav|
@@ -69,7 +70,7 @@ SimpleNavigation::Configuration.run do |navigation|
     # you can also specify a css id or class to attach to this particular level
     # works for all levels of the menu
     # primary.dom_id = 'menu-id'
-    primary.dom_class = 'nav navbar-nav'
+    primary.dom_class = 'nav navbar-nav fullwidth'
 
     # You can turn off auto highlighting for a specific level
     # primary.auto_highlight = false

@@ -17,25 +17,14 @@
 
 
 .sidebar{float: left; width: 214px; }
+.btn-success { color: #fff; background-color: #5cb85c; border-color: #4cae4c; }
 
-.btn-success {
-  color: #fff;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
-}
-
-td.edit_delete, th.edit_delete{
-	width: 45px;
-	padding-right: 4px !important;
-	padding-left: 4px !important;
-}
+td.edit_delete, th.edit_delete{ width: 45px; padding-right: 4px !important;	padding-left: 4px !important; }
 
 span.btn,span.btn-sm{cursor: pointer;}
 
 input[type="text"], input[type="number"], input[type="password"], 
-input[type="email"], textarea, .comment_area{
-border: 1px solid #bbb;
-border-radius: 3px;
+input[type="email"], textarea, .comment_area{ border: 1px solid #bbb; border-radius: 3px;
 -webkit-transition: border linear 0.2s,box-shadow linear 0.2s;
 -moz-transition: border linear 0.2s,box-shadow linear 0.2s;
 -ms-transition: border linear 0.2s,box-shadow linear 0.2s;
@@ -47,9 +36,7 @@ box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
 input[type="text"]:focus,#datepicker:focus,textarea:focus,
-.chosen-container-multi:focus, .chosen-choices:focus
-{
- outline:0;
+.chosen-container-multi:focus, .chosen-choices:focus{ outline:0;
  border-color:rgba(82,168,236,0.8);
 -webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
 -moz-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
@@ -57,16 +44,24 @@ input[type="text"]:focus,#datepicker:focus,textarea:focus,
 }
 
 .left {float: left;}
+.li-right, .right {  float: right !important;  margin-top: 0 !important; }
+.fullwidth{ width: 100%;}
+.navbar-inverse .navbar-nav>li>a {color: #aaa;}
+.navbar-inverse{
+  background: url("menu_bg_dark.png");
+}
 
-.element_name{float: left;}
-.mrg_l {margin-left: 10px;}
 
-.btn-min {  padding: 2px 10px;  font-size: 11px;  line-height: 1.5;  border-radius: 3px; vertical-align: top !important;}
-.itemAdd_form { padding: 2px; margin-bottom: 10px;   height: 20px;}
 
-.col-menu { position: relative; min-height: 1px; padding-left: 0; padding-right: 15px; width: 150; float: left;}
+.element_name {float: left; }
+.mrg_l { margin-left: 10px; }
+
+.btn-min { padding: 2px 10px; font-size: 11px; line-height: 1.5; border-radius: 3px; vertical-align: top !important; }
+.itemAdd_form { padding: 2px; margin-bottom: 10px;   height: 20px; }
+
+.col-menu { position: relative; min-height: 1px; padding-left: 0; padding-right: 15px; width: 150; float: left; }
 
 a.list-group-item { padding: 4px 10px; }
-.short_num{width: 40px;}
+.short_num{ width: 40px; }
 span.delete{ background: url('delete.png') no-repeat; width: 16px;  height: 16px; display: inline-block; vertical-align:middle; position:relative; }
-span.delete:hover{cursor: pointer;}
+span.delete:hover{ cursor: pointer; }
