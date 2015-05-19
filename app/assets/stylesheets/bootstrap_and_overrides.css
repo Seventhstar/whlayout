@@ -6,3 +6,6 @@
   =require twitter-bootstrap-static/fontawesome
   */
 
+a.btn, a.btn-sm{text-decoration: none;}
+
+label {margin-right: 10px;}

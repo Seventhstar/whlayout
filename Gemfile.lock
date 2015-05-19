@@ -169,6 +169,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   simple-navigation-bootstrap
   simple_form
+  sprockets-rails
   sqlite3 (= 1.3.10)
   twitter-bootstrap-rails
   tzinfo-data

@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
   resources :elements
-
   resources :layouts
+  resources :layout_elements
 
   resources :users
   resources :whouses
@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
+
+  post "ajax/add_lay_el"
+  get    'options'  => 'options#edit'
+  get    'options/:options_page'  => 'options#edit'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

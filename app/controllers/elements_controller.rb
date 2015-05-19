@@ -5,6 +5,7 @@ class ElementsController < ApplicationController
   # GET /elements.json
   def index
     @elements = Element.all
+    @element = Element.new
   end
 
   # GET /elements/1

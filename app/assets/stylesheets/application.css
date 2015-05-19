@@ -12,7 +12,11 @@
  *
  *= require_tree .
  *= require_self
+ *= require chosen
  */
+
+
+.sidebar{float: left; width: 214px; }
 
 .btn-success {
   color: #fff;
@@ -20,35 +24,39 @@
   border-color: #4cae4c;
 }
 
-.bs-example {
-  margin-right: 0;
-  margin-left: 0;
-  background-color: #fff;
-  border-color: #ddd;
-  border-width: 1px;
-  border-radius: 4px 4px 0 0;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-
-    position: relative;
-  padding: 45px 15px 15px;
-  margin: 0 -15px 15px;
-}
-
-.bs-example:after {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #959595;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  content: "Example";
-}
-
 td.edit_delete, th.edit_delete{
 	width: 45px;
 	padding-right: 4px !important;
 	padding-left: 4px !important;
 }
+
+span.btn,span.btn-sm{cursor: pointer;}
+
+input[type="text"], input[type="number"], input[type="password"], 
+input[type="email"], textarea, .comment_area{
+border: 1px solid #bbb;
+border-radius: 3px;
+-webkit-transition: border linear 0.2s,box-shadow linear 0.2s;
+-moz-transition: border linear 0.2s,box-shadow linear 0.2s;
+-ms-transition: border linear 0.2s,box-shadow linear 0.2s;
+-o-transition: border linear 0.2s,box-shadow linear 0.2s;
+transition: border linear 0.2s,box-shadow linear 0.2s;
+-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+input[type="text"]:focus,#datepicker:focus,textarea:focus,
+.chosen-container-multi:focus, .chosen-choices:focus
+{
+ outline:0;
+ border-color:rgba(82,168,236,0.8);
+-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+-moz-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+ box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6)
+}
+
+.left {float: left;}
+
+.element_name{float: left;}
+.mrg_l {margin-left: 10px;}

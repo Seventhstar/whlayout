@@ -15,7 +15,7 @@
   <tbody>
     <% @layouts.each do |layout| %>
       <tr>
-        <td><%= layout.name %></td>
+        <td><%= link_to layout.name, layout %></td>
         <%= edit_delete(layout) %>
       </tr>
     <% end %>

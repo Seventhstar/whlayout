@@ -11,6 +11,8 @@ class LayoutsController < ApplicationController
   # GET /layouts/1.json
   def show
     @layout_elements = @layout.elements
+    @layout_element = @layout.layout_elements.new
+    @elements = Element.all
   end
 
   # GET /layouts/new

@@ -12,7 +12,6 @@
     <% @layout_elements.each do |lay_el| %>
       <tr>
         <td><%= lay_el.name %></td>
-        <%= edit_delete(lay_el) %>
       </tr>
     <% end %>
   </tbody>
@@ -20,6 +19,11 @@
 
 <br>
 
-<%= link_to 'Добавить элемент', new_layout_path, class: "btn btn-success" %>
+<%= form_for(@layout_element) do |f| %>
+<%= f.hidden_field :layout_id   %>
+<%= f.select 'element_id', content_tag(:option,'Элемент...',:value=>"")+options_for_select(@elements.collect{ |e| [e.name, e.id] }) %>
+
+<span class="btn-sm btn-success">Добавить</span>
+<% end %>
 
 </div>

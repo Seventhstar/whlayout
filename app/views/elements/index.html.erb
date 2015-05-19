@@ -1,14 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Микросхемы и т.д.</h1>
+<h3>Микросхемы и т.д.</h3>
 
-<div class="bs-example" data-example-id="simple-table">
+<div class="panel panel-default">
 <table class="table table-striped table-hover">
 
   <thead>
     <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
+      <th>Наименование</th>
+      <th></th>
     </tr>
   </thead>
 
@@ -19,11 +19,16 @@
          <%= edit_delete(element) %>
       </tr>
     <% end %>
+      <tr>
+        <td colspan="2"><%= render "form" %></td>
+      </tr>
+
   </tbody>
+
 </table>
 
 <br>
 
-<%= link_to 'Добавить элемент', new_element_path, class: "btn btn-success" %>
+<% link_to 'Добавить элемент', new_element_path, class: "btn btn-success" %>
 
 </div>
