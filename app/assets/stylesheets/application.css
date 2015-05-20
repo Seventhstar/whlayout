@@ -65,3 +65,6 @@ a.list-group-item { padding: 4px 10px; }
 .short_num{ width: 40px; }
 span.delete{ background: url('delete.png') no-repeat; width: 16px;  height: 16px; display: inline-block; vertical-align:middle; position:relative; }
 span.delete:hover{ cursor: pointer; }
+
+.w80{width: 80%;}
+.items_box_head {  margin: 0 0 10px 0; min-height: 20px;}
