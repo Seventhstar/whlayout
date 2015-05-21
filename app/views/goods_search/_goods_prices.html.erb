@@ -1,0 +1,35 @@
+<% if @items.count >0 %>
+<div class="panel panel-default">
+<table class="table tableSorter table-striped table-hover">
+
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Наименование</th>
+      <th>Цена</th>
+      <th>Лот,шт.</th>
+      <th>Цена,шт.</th>
+      <th>Доставка</th>
+      <th>Сайт</th>
+    </tr>
+  </thead>
+
+
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item[1][:id] %></td>
+        <td><%= item[1][:title] %></td>
+        <td><%= item[1][:price] %></td>
+        <td><%= item[1][:lot_count] %></td>
+        <td><%= item[1][:item_price] %></td>
+        <td><%= item[1][:ship_price] %></td>
+        <td><%= item[1][:site] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+</div>
+<% end %>

@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require spin
+//= require jquery.spin
 //= require twitter/bootstrap
 //= require chosen.jquery
 //= require_tree .
@@ -19,6 +21,13 @@
 
 
 $(function() {
+
+  $( document ).ajaxStop(function() {
+    $('table.tableSorter').tableSort();
+  });
+  $('table.tableSorter').tableSort();
+
+
 	$('#lay_el_element_id').chosen();
   $('#wh_el_element_id').chosen();
 

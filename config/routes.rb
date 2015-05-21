@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :layouts
   resources :layout_elements
   resources :whouse_elements
+  resources :goods_search
+#  get 'goods_search/:params'  => 'goods_search#index'
 
   resources :users
   resources :whouses
