@@ -36,7 +36,7 @@ class WhousesController < ApplicationController
 
     respond_to do |format|
       if @whouse.save
-        format.html { redirect_to '/options/elements', notice: 'Whouse was successfully created.' }
+        format.html { redirect_to '/options/whouses', notice: 'Whouse was successfully created.' }
         format.json { render :show, status: :created, location: @whouse }
       else
         format.html { render :new }
@@ -50,7 +50,7 @@ class WhousesController < ApplicationController
   def update
     respond_to do |format|
       if @whouse.update(whouse_params)
-        format.html { redirect_to '/options/elements', notice: 'Whouse was successfully updated.' }
+        format.html { redirect_to '/options/whouses', notice: 'Whouse was successfully updated.' }
         format.json { render :show, status: :ok, location: @whouse }
       else
         format.html { render :edit }
@@ -64,7 +64,7 @@ class WhousesController < ApplicationController
   def destroy
     @whouse.destroy
     respond_to do |format|
-      format.html { redirect_to '/options/elements', notice: 'Whouse was successfully destroyed.' }
+      format.html { redirect_to '/options/whouses', notice: 'Whouse was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

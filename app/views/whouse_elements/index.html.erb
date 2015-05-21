@@ -8,7 +8,7 @@
     <%= text_field_tag :search, params[:search], :class => "search_area txt" %>
   </div>
   <label class="combobox">
-    <%= select_tag "whouse", content_tag(:option,'Склад...',:value=>"")+options_from_collection_for_select(@whouses, "id", "name") %>
+    <%= select_tag :whouse_id, options_from_collection_for_select(@whouses, "id", "name"), { :include_blank => "Склад..." } %>
   </label>
 
 <% end %>

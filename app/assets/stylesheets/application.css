@@ -12,7 +12,6 @@
  *
  *= require_tree .
  *= require_self
- *= require chosen
  */
 
 
@@ -68,3 +67,5 @@ span.delete:hover{ cursor: pointer; }
 
 .w80{width: 80%;}
 .items_box_head {  margin: 0 0 10px 0; min-height: 20px;}
+.combobox{ margin-left: 10px; }
+

@@ -21,7 +21,6 @@
 $(function() {
 	$('#lay_el_element_id').chosen();
   $('#wh_el_element_id').chosen();
-  $('select').chosen();
 
   $('.options-menu a').click(function(){ 
       $('.options-menu a.active').removeClass("active", 150, "easeInQuint");

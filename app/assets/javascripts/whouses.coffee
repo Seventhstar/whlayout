@@ -6,11 +6,16 @@
   $.get '/whouses/'+wh_id, "", null, "script"
 
 @update_whel = ->
-  param = {'search': $('#search').val()}
+  #param = {'search': $('#search').val(), 'whouse_id': $('#whouses_search select#whouse').val()}
+  param = $('form').serialize()
+
   $.get 'whouse_elements/', param, null, 'script'
   return
 
 $(document).ready ->
+
+  $('#whouses_search select#whouse_id').chosen(width: '340px', disable_search: true).on 'change', ->
+    update_whel()
 
   $('#whouses_search input').keyup ->
     c = String.fromCharCode(event.keyCode)

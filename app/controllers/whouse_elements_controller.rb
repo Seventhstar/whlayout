@@ -4,14 +4,38 @@ class WhouseElementsController < ApplicationController
   # GET /whouses
   # GET /whouses.json
   def index
-    @whouses = Whouse.all
-    if params[:search]
-      @whels = WhouseElement.joins(:element).where('elements.name LIKE ?', '%'+ params[:search]+'%').order(:whouse_id)
-    else
-      @whels = WhouseElement.order(:whouse_id)
+    
+    @whouses = Whouse.order(:name)
+
+
+    query = ""
+    qparams = {}
+    if !params[:whouse_id].nil? && params[:whouse_id]!=""
+       query = 'whouses.id = :key1' 
+       qparams.store( :key1, params[:whouse_id])
+       puts "first add"
     end
+
+    if params[:search]!=nil && params[:search]!=""
+      @whels = WhouseElement.joins(:element)
+      query = query == "" ? "": query+ " and "
+      query = query + "elements.name LIKE :key2" 
+      qparams.store( :key2, '%'+ params[:search].to_s+'%')
+    else
+      @whels = WhouseElement.all
+    end
+
+   # puts "qparams: " + qparams.to_s
+
+    if query !="" 
+     @whels = @whels.where(query,qparams)
+    end
+
+    @whels = @whels.joins(:whouse).order('whouses.name')
+
   end
 
+  
 
   # GET /whouses/1/edit
   def edit
