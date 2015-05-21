@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<h3>Список складов</h3>
+
+<div class="items_box_head">
+ <%= form_tag whouses_path, :method => 'get', :id => "whouses_search" do %>
+  <div class="input-group left"> 
+    <%= text_field_tag :search, params[:search], :class => "search_area txt" %>
+  </div>
+  <label class="combobox">
+    <%= select_tag "whouse", content_tag(:option,'Склад...',:value=>"")+options_from_collection_for_select(@whouses, "id", "name") %>
+  </label>
+
+<% end %>
+</div>
+
+<div class="whouses_index">
+  <%= render "whouses_index" %>
+</div>
+
+<%= link_to 'Новый склад', new_whouse_path, class: "btn btn-success" %>
+

@@ -50,8 +50,7 @@ SimpleNavigation::Configuration.run do |navigation|
     #                            against the current URI.  You may also use a proc, or the symbol <tt>:subpath</tt>. 
     #
     #primary.item :key_1, 'name', url, options
-    primary.item :elements, 'Элементы', '/elements'
-    primary.item :whouses, 'Склады', '/whouses'
+    primary.item :whouses, 'Склады', '/whouse_elements'
     primary.item :layouts, 'Схемы', '/layouts'
     primary.item :elements, image_tag('options.png'), '/options/elements', :class => 'li-right options'
 

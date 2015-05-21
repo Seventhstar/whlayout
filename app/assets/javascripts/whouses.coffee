@@ -5,7 +5,21 @@
 @update_whouse_show = (wh_id)->
   $.get '/whouses/'+wh_id, "", null, "script"
 
+@update_whel = ->
+  param = {'search': $('#search').val()}
+  $.get 'whouse_elements/', param, null, 'script'
+  return
+
 $(document).ready ->
+
+  $('#whouses_search input').keyup ->
+    c = String.fromCharCode(event.keyCode)
+    isWordcharacter = c.match(/\w/)
+    if isWordcharacter or event.keyCode == 8
+      s = 1
+      setTimeout 'update_whel()', 400
+    false
+
   $('.container').on 'click', 'span.btn-sm', ->
     param = $('[name^=wh_el]')
     wh_id = $('#wh_el_whouse_id').val()

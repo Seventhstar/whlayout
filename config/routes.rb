@@ -3,11 +3,12 @@ Rails.application.routes.draw do
   resources :elements
   resources :layouts
   resources :layout_elements
+  resources :whouse_elements
 
   resources :users
   resources :whouses
 
-  root :to => "whouses#index"
+  root :to => "whouse_elements#index"
 
   get    'signup'  => 'users#new'
   get    'login'   => 'sessions#new'                                   

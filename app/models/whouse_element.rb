@@ -6,5 +6,9 @@ class WhouseElement < ActiveRecord::Base
     element.try(:name)
   end
 
+  def whouse_name
+    whouse.try(:name)
+  end
+
 
 end

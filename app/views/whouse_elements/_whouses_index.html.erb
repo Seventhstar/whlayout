@@ -1,0 +1,32 @@
+<% cur_whouse = "" %>
+<% first_table = true %>
+
+<% @whels.each do |whel| %>
+
+    <% if cur_whouse != whel.whouse_name %>
+     <% if !first_table %></tbody></table></div><% end %>
+      <div class="panel panel-default">
+      <div class="panel-heading table-heading"><%= link_to whel.whouse_name,whel.whouse %></div>
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th class="w80">Элемент</th>
+            <th>Количество</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+      <% cur_whouse = whel.whouse_name %>
+      <% first_table = false %>
+    <% end %>
+
+      <tr>
+        <td><%= whel.element_name %></td>
+        <td><%= whel.count %></td>
+        <td></td>
+      </tr>
+
+<% end %>
+
+</tbody></table></div>
+<br>
