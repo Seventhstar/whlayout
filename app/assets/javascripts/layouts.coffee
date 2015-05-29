@@ -7,7 +7,7 @@
   $.get '/layouts/'+lay_id, "", null, "script"
 
 $(document).ready ->
-  $('.container').on 'click', 'span.btn-sm', ->
+  $('.container').on 'click', '#layout_elements span.btn-sm', ->
     param = $('[name^=lay_el]')
     lay_id = $('#lay_el_layout_id').val()
     $.ajax
@@ -25,7 +25,7 @@ $(document).ready ->
   $('.container').on 'click', '#layout_elements span.delete', ->
     lay_id = $('#lay_el_layout_id').val()
     el_id = $(this).attr('el_id')
-    del = confirm('Действительно удалить?')
+    del = confirm('Действительно удалить схему?')
     if !del
       return
     $.ajax

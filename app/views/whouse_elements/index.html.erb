@@ -1,14 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Список складов</h3>
+<h3>Элементы на складах</h3>
 
 <div class="items_box_head">
  <%= form_tag whouses_path, :method => 'get', :id => "whouses_search" do %>
   <div class="input-group left"> 
-    <%= text_field_tag :search, params[:search], :class => "search_area txt" %>
+    <%= text_field_tag :search, params[:search], :class => "search_area txt", placeholder: "Название элемента..." %>
   </div>
-  <label class="combobox">
-    <%= select_tag :whouse_id, options_from_collection_for_select(@whouses, "id", "name"), { :include_blank => "Склад..." } %>
+  <span class="sub btn btn-min2 btn-success mrg_l" id="btn-add-el" style="display: none;"> Добавить элемент</span>
+
+  <label class="combobox right">
+    <%= select_tag :whouse_id, options_from_collection_for_select(@whouses, "id", "name"), { :include_blank => "Выберите склад..."  } %>
   </label>
 
 <% end %>

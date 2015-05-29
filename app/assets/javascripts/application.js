@@ -28,11 +28,11 @@ $(function() {
   $('table.tableSorter').tableSort();
 
 
-	$('#lay_el_element_id').chosen();
+  $('#lay_el_element_id').chosen();
   $('#wh_el_element_id').chosen();
 
   $('.options-menu a').click(function(){ 
-      $('.options-menu a.active').removeClass("active", 150, "easeInQuint");
+      $('.options-menu a.active').removeClass("active", 550, "easeInQuint");
       $(this).addClass("active");
       var url = "/" + $(this).attr("controller");
       $.get(url, null, null, "script");

@@ -12,41 +12,25 @@
   $.get 'whouse_elements/', param, null, 'script'
   return
 
-$(document).ready ->
-
-  $('#whouses_search select#whouse_id').chosen(width: '340px', disable_search: true).on 'change', ->
-    update_whel()
-
-  $('#whouses_search input').keyup ->
-    c = String.fromCharCode(event.keyCode)
-    isWordcharacter = c.match(/\w/)
-    if isWordcharacter or event.keyCode == 8
-      s = 1
-      setTimeout 'update_whel()', 400
-    false
-
-  $('.container').on 'click', 'span.btn-sm', ->
-    param = $('[name^=wh_el]')
-    wh_id = $('#wh_el_whouse_id').val()
-    $.ajax
+@add_el_to_wh = (dt,func)->
+  $.ajax
       url: '/ajax/add_wh_el'
-      data: param.serialize()
+      data: dt
       type: 'POST'
       beforeSend: (xhr) ->
         xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
         return
       success: ->
-        update_whouse_show(wh_id)
+        $('#search').val ''
+        setTimeout(func,1)
         return
      return
 
-  $('.container').on 'click', '#whouse_elements span.delete', ->
-    wh_id = $('#wh_el_whouse_id').val()
-    el_id = $(this).attr('el_id')
-    del = confirm('Действительно удалить?')
-    if !del
+@del_el_from_wh = (el_id,func)->
+   del = confirm('Действительно удалить элемент из склада?')
+   if !del
       return
-    $.ajax
+   $.ajax
       url: '/ajax/del_wh_el'
       data: 'el_id': el_id
       type: 'POST'
@@ -54,6 +38,48 @@ $(document).ready ->
         xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
         return
       success: ->
-        update_whouse_show(wh_id)
+        setTimeout(func,1)
         return
-    return
+    return     
+
+timeoutId = undefined
+
+$(document).ready ->
+
+  $('#whouses_search select#whouse_id').chosen(width: '340px', disable_search: true).on 'change', ->
+    if !$('#whouse_id').val() 
+      $('#btn-add-el').hide();
+    else
+      $('#btn-add-el').show();
+    update_whel()
+
+  $('#whouses_search input').keyup ->
+    c = String.fromCharCode(event.keyCode)
+    isWordcharacter = c.match(/\w/)
+    if isWordcharacter or event.keyCode == 8
+      s = 1
+      clearTimeout timeoutId
+      timeoutId = setTimeout('update_whel()', 800)
+    false
+
+  
+  $('.container').on 'click', '#whouses_search span#btn-add-el', ->
+    wh_id = $('#whouse_id').val()
+    add_el_to_wh($('form').serialize(),'update_whel()')
+
+  $('.container').on 'click', '.whouse_elements span.btn-sm', ->
+    param = $('[name^=wh_el]')
+    wh_id = $('#wh_el_whouse_id').val()
+    add_el_to_wh(param.serialize(),'update_whouse_show('+wh_id+')')
+
+  $('.container').on 'click', '.whouse_elements span.delete', ->
+    wh_id = $('#wh_el_whouse_id').val()
+    el_id = $(this).attr('el_id')
+    del_el_from_wh(el_id,'update_whouse_show('+wh_id+')')
+
+  $('.container').on 'click', '.whouses_index span.delete', ->
+    wh_id = $('#whouse_id').val()
+    el_id = $(this).attr('item_id')
+    del_el_from_wh(el_id,'update_whel()')
+
+    

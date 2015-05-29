@@ -25,11 +25,26 @@ module ApplicationHelper
      if subcount>0 
       de = image_tag('delete-disabled.png')
      else
-      de = link_to image_tag('delete.png'), element, method: :delete, data: { confirm: 'Действительно удалить?' }
+      de = link_to image_tag('delete.png'), element, method: :delete, data: { confirm: 'Действительно удалить -?' }
      end 
      ed + de
     end
   end
+
+  def sp_edit_delete(element,subcount = nil)
+    content_tag :td,{:class=>"edit_delete"} do
+     ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit"
+     #ed = link_to "", polymorphic_path(element), :class=>"icon icon_edit", data: { modal: true }
+     subcount ||= 0
+     if subcount>0 
+      de = content_tag("span","",{:class=>'delete disabled'})
+     else
+      de = content_tag("span","",{:class=>'delete', item_id: element.id})
+     end 
+     ed + de
+    end
+  end
+
 
   def option_link( page,title )
     css_class = @page_data == page ? "active" : nil

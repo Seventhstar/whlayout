@@ -19,14 +19,23 @@ class AjaxController < ApplicationController
    end
 
   def add_wh_el
-   if params[:wh_el][:whouse_id] 
+    puts "we in add_wh_el"
+   if params[:wh_el]
       w_el = WhouseElement.new
       w_el.whouse_id 	= params[:wh_el][:whouse_id]
       w_el.element_id = params[:wh_el][:element_id]
       w_el.count 		= params[:wh_el][:count]
       w_el.save	
+  else
+      #puts "params^ "+params
+      w_el = WhouseElement.new
+      w_el.whouse_id  = params[:whouse_id]
+      el = Element.where(name: params[:search]).first_or_create
+      w_el.element_id = el.id
+      w_el.count    = 1
+      w_el.save 
    end
-	render :nothing => true
+	  render :nothing => true
    end
 
    def del_wh_el
