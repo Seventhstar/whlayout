@@ -33,13 +33,14 @@ module ApplicationHelper
 
   def sp_edit_delete(element,subcount = nil)
     content_tag :td,{:class=>"edit_delete"} do
-     ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit"
-     #ed = link_to "", polymorphic_path(element), :class=>"icon icon_edit", data: { modal: true }
+     #ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit"
+     #ed = link_to image_tag('edit.png'), polymorphic_path(element), :class=>"icon icon_edit", data: { modal: true }
+      ed = content_tag :span, "",{class: 'icon edit', item_id: element.id}
      subcount ||= 0
      if subcount>0 
-      de = content_tag("span","",{:class=>'delete disabled'})
+      de = content_tag("span","",{:class=>'icon delete disabled'})
      else
-      de = content_tag("span","",{:class=>'delete', item_id: element.id})
+      de = content_tag("span","",{:class=>'icon delete', item_id: element.id})
      end 
      ed + de
     end

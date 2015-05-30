@@ -1,18 +1,12 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @whouse.name %>
-</p>
+<p><strong>Склад:</strong><%= @whouse.name %></p>
 
 <div class="whouse_elements">
-<div id="whouse_elements">
-	<%= render "whouse_elements" %>
-</div>
+	<div id="whouse_elements">
+		<%= render "whouse_elements" %>
+	</div>
 
-<%= hidden_field :wh_el, :whouse_id, value: @whouse.id  %>
-<%= select :wh_el,'element_id', content_tag(:option,'Элемент...',:value=>"")+options_for_select(@elements.collect{ |e| [e.name, e.id] }) %>
-<%= number_field :wh_el, :count, value: 1, class: "short_num" %>
-<span class="btn-sm btn-success">Добавить</span>
+	<div class="whouses control">
+		<%= render "new_cntr" %>
+	</div>
 
 </div>

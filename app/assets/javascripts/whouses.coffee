@@ -49,8 +49,10 @@ $(document).ready ->
   $('#whouses_search select#whouse_id').chosen(width: '340px', disable_search: true).on 'change', ->
     if !$('#whouse_id').val() 
       $('#btn-add-el').hide();
+      $('#wh_el_count').hide();
     else
       $('#btn-add-el').show();
+      $('#wh_el_count').show();
     update_whel()
 
   $('#whouses_search input').keyup ->
@@ -65,6 +67,7 @@ $(document).ready ->
   
   $('.container').on 'click', '#whouses_search span#btn-add-el', ->
     wh_id = $('#whouse_id').val()
+    #alert($('form').serialize())
     add_el_to_wh($('form').serialize(),'update_whel()')
 
   $('.container').on 'click', '.whouse_elements span.btn-sm', ->
@@ -81,5 +84,8 @@ $(document).ready ->
     wh_id = $('#whouse_id').val()
     el_id = $(this).attr('item_id')
     del_el_from_wh(el_id,'update_whel()')
-
-    
+  
+  $('.container').on 'click', 'span.edit', ->
+    item_id = $(this).attr('item_id')
+    #alert(item_id)
+    $.get '/whouses/'+wh_id+'/edit', "", null, "script"

@@ -2,11 +2,12 @@
 
 <h3>Элементы на складах</h3>
 
-<div class="items_box_head">
+<div class="items_box_head control">
  <%= form_tag whouses_path, :method => 'get', :id => "whouses_search" do %>
   <div class="input-group left"> 
     <%= text_field_tag :search, params[:search], :class => "search_area txt", placeholder: "Название элемента..." %>
   </div>
+  <%= number_field :wh_el, :count, value: 1, class: "short_num", style:"display: none;"  %>
   <span class="sub btn btn-min2 btn-success mrg_l" id="btn-add-el" style="display: none;"> Добавить элемент</span>
 
   <label class="combobox right">
@@ -20,5 +21,7 @@
   <%= render "whouses_index" %>
 </div>
 
+
 <%= link_to 'Новый склад', new_whouse_path, class: "btn btn-success" %>
+
 

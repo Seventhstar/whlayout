@@ -14813,8 +14813,10 @@ left:"",right:"-"+b.distance}).animate({right:"0px",opacity:1},b.speed,function(
     }).on('change', function() {
       if (!$('#whouse_id').val()) {
         $('#btn-add-el').hide();
+        $('#wh_el_count').hide();
       } else {
         $('#btn-add-el').show();
+        $('#wh_el_count').show();
       }
       return update_whel();
     });
@@ -14846,11 +14848,16 @@ left:"",right:"-"+b.distance}).animate({right:"0px",opacity:1},b.speed,function(
       el_id = $(this).attr('el_id');
       return del_el_from_wh(el_id, 'update_whouse_show(' + wh_id + ')');
     });
-    return $('.container').on('click', '.whouses_index span.delete', function() {
+    $('.container').on('click', '.whouses_index span.delete', function() {
       var el_id, wh_id;
       wh_id = $('#whouse_id').val();
       el_id = $(this).attr('item_id');
       return del_el_from_wh(el_id, 'update_whel()');
+    });
+    return $('.container').on('click', 'span.edit', function() {
+      var item_id;
+      item_id = $(this).attr('item_id');
+      return $.get('/whouses/' + wh_id + '/edit', "", null, "script");
     });
   });
 

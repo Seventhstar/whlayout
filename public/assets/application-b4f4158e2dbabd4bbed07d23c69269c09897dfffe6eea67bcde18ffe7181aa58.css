@@ -582,7 +582,7 @@ table.tableSorter th div.sortArrow div.sortArrowDescending {
 	background: url('arrow_desc.png') no-repeat;
 }
 /* line 5, D:/www/railsprj/whlayout/app/assets/stylesheets/whouses.scss */
-#whouses_search input {
+#whouses_search input[type='text'] {
   height: 25px;
   width: 300px;
 }
@@ -654,9 +654,16 @@ input[type="text"]:focus,#datepicker:focus,textarea:focus,
 
 a.list-group-item { padding: 4px 10px; }
 .short_num{ width: 40px; }
-span.delete{ background: url('delete.png') no-repeat; width: 16px;  height: 16px; display: inline-block; vertical-align:middle; position:relative; }
-span.delete:hover{ cursor: pointer; }
+
+span.icon { width: 16px;  height: 16px; display: inline-block; vertical-align:middle; position:relative; }
+span.icon:hover{ cursor: pointer; }
+span.delete{ background: url('delete.png') no-repeat;  }
+span.edit{background: url('edit.png') no-repeat;}
 
 .w80{width: 80%;}
 .items_box_head {  margin: 0 0 10px 0; min-height: 20px;}
 .combobox{ margin-left: 10px; margin-right: 0;}
+
+.control input[type='number']{height: 25px; vertical-align: bottom;}
+.control .chosen-container{margin-top: 0;}
+.control .btn-sm{vertical-align: bottom;margin-top: 1px;}
