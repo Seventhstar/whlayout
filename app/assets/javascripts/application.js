@@ -28,6 +28,17 @@ $(function() {
   $('table.tableSorter').tableSort();
 
 
+  //var table = document.getElementById('edit');
+  //var table = $('.table').click();
+  /*$('td').click(function()    {
+        var td_val = $(this).html();
+        var input_field = $('<input type="text" id="edit" value="' + td_val + '" />');
+        $(this).html(input_field);
+        $(input).focus();
+    });*/
+
+
+
   $('#lay_el_element_id').chosen();
   $('#wh_el_element_id').chosen();
 
@@ -52,18 +63,16 @@ $(function() {
     });
 
     if (!empty_name){
-    $.ajax({
-        type: "POST",
-        url: url, //sumbits it to the given url of the form
-        data: valuesToSubmit,
-        dataType: 'JSON',  
-        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},         
-        success: function(){
-          $.get(url, null, null, "script");
-      }
-    });
+      $.ajax({
+          type: "POST",
+          url: url, //sumbits it to the given url of the form
+          data: valuesToSubmit,
+          dataType: 'JSON',  
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},         
+          success: function(){$.get(url, null, null, "script");}
+      });
     }
-    });
+  });
 
 
 });

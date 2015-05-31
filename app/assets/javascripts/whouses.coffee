@@ -42,6 +42,13 @@
         return
     return     
 
+@disable_input = ->
+ $cells = $('.editable')
+ $cells.each ->
+  _cell = $(this)
+  _cell.html _cell.find('input').val()
+  return    
+
 timeoutId = undefined
 
 $(document).ready ->
@@ -87,5 +94,19 @@ $(document).ready ->
   
   $('.container').on 'click', 'span.edit', ->
     item_id = $(this).attr('item_id')
-    #alert(item_id)
-    $.get '/whouses/'+wh_id+'/edit', "", null, "script"
+    $row = $(this).parents('')
+    disable_input()
+    $cells = $row.children('td').not('.edit_delete')
+    $cells.each ->
+      _cell = $(this)
+      _cell.addClass('editable')
+      _cell.data('text', _cell.html()).html ''
+      type = _cell.attr('type')
+      if type == undefined then 'text' else type      
+      $input = $('<input type="'+type+'" />').val(_cell.data('text')).width(_cell.width() - 16)
+      _cell.append $input
+      return
+    
+
+    
+
