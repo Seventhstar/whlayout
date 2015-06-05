@@ -7,11 +7,11 @@
      <% if !first_table %></tbody></table></div><% end %>
       <div class="panel panel-default">
       <div class="panel-heading table-heading"><%= link_to whel.whouse_name,whel.whouse %></div>
-      <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover" model="<%= whel.class.name %>">
         <thead>
           <tr>
-            <th class="w80">Элемент</th>
-            <th>Количество</th>
+            <th class="w80" fld="element_name">Элемент</th>
+            <th fld="count">Количество</th>
             <th></th>
           </tr>
         </thead>

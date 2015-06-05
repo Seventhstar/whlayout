@@ -42,12 +42,18 @@
         return
     return     
 
-@disable_input = ->
+@disable_input = -> 
+ item_id = $('.icon_apply').attr('item_id')
  $cells = $('.editable')
  $cells.each ->
   _cell = $(this)
+  _cell.removeClass('editable')
   _cell.html _cell.find('input').val()
-  return    
+ 
+ $cell = $('td.app_cancel')  
+ $cell.removeClass('app_cancel')
+ $cell.html '<span class="icon edit" item_id="'+item_id+'"></span><span class="icon delete" item_id="'+item_id+'"></span>' 
+
 
 timeoutId = undefined
 
@@ -92,6 +98,9 @@ $(document).ready ->
     el_id = $(this).attr('item_id')
     del_el_from_wh(el_id,'update_whel()')
   
+
+ # редактирование данных в таблица
+
   $('.container').on 'click', 'span.edit', ->
     item_id = $(this).attr('item_id')
     $row = $(this).parents('')
@@ -102,11 +111,23 @@ $(document).ready ->
       _cell.addClass('editable')
       _cell.data('text', _cell.html()).html ''
       type = _cell.attr('type')
-      if type == undefined then 'text' else type      
+      #alert(type==undefined)
+      type = if type == undefined then 'text' else type      
       $input = $('<input type="'+type+'" />').val(_cell.data('text')).width(_cell.width() - 16)
       _cell.append $input
       return
-    
 
+    $cell = $row.children('td.edit_delete')  
+    $cell.addClass('app_cancel')
+    $cell.html '<span class="icon icon_apply" item_id="'+item_id+'"></span><span class="icon icon_cancel" item_id="'+item_id+'"></span>'
     
+   # отмена редактирования
+   $('.container').on 'click', 'span.icon_cancel', ->   
+     disable_input()
 
+   # отправка новых данных
+   $('.container').on 'click', 'span.icon_apply', ->  
+     model = $(this).closest('table').attr('model')
+     fld = $(this).closest('th').attr('fld')
+     alert(fld)
+     disable_input()
