@@ -12,6 +12,17 @@
   $.get 'whouse_elements/', param, null, 'script'
   return
 
+@upd_param = (param)->
+  $.ajax
+      url: '/ajax/upd_param'
+      data: param
+      type: 'POST'
+      beforeSend: (xhr) ->
+        xhr.setRequestHeader 'X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')
+        return
+     return
+
+
 @add_el_to_wh = (dt,func)->
   $.ajax
       url: '/ajax/add_wh_el'
@@ -42,13 +53,17 @@
         return
     return     
 
-@disable_input = -> 
+@disable_input = (cancel=true) -> 
  item_id = $('.icon_apply').attr('item_id')
  $cells = $('.editable')
  $cells.each ->
   _cell = $(this)
   _cell.removeClass('editable')
-  _cell.html _cell.find('input').val()
+  if cancel
+    _cell.html _cell.attr('last_val')
+  else
+    _cell.html _cell.find('input').val()    
+  return
  
  $cell = $('td.app_cancel')  
  $cell.removeClass('app_cancel')
@@ -106,14 +121,20 @@ $(document).ready ->
     $row = $(this).parents('')
     disable_input()
     $cells = $row.children('td').not('.edit_delete')
+    table = $(this).closest('table')
     $cells.each ->
       _cell = $(this)
       _cell.addClass('editable')
-      _cell.data('text', _cell.html()).html ''
+      val = _cell.html()      
+      _cell.data('text', val).html ''
+      _cell.attr('last_val',val)
+      #_cell.attr('ind', table.children('th').nth-child(_cell.index()+1))
+      #alert(table.find('th:eq('+(_cell.index()+1)+')').attr('fld'))
+      _cell.attr('ind', table.find('th:eq('+_cell.index()+')').attr('fld'))
       type = _cell.attr('type')
       #alert(type==undefined)
       type = if type == undefined then 'text' else type      
-      $input = $('<input type="'+type+'" />').val(_cell.data('text')).width(_cell.width() - 16)
+      $input = $('<input type="'+type+'" name=upd['+table.find('th:eq('+_cell.index()+')').attr('fld')+'] />').val(_cell.data('text')).width(_cell.width() - 16)
       _cell.append $input
       return
 
@@ -128,6 +149,7 @@ $(document).ready ->
    # отправка новых данных
    $('.container').on 'click', 'span.icon_apply', ->  
      model = $(this).closest('table').attr('model')
-     fld = $(this).closest('th').attr('fld')
-     alert(fld)
-     disable_input()
+     inputs = $('input[name^=upd]')
+     #alert(inputs.serialize())
+     upd_param(inputs)
+     disable_input(false)

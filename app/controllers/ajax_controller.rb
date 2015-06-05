@@ -45,5 +45,9 @@ class AjaxController < ApplicationController
   	render :nothing => true
    end
 
+   def upd_param
+       puts params
+  	render :nothing => true
+   end
 
 end
