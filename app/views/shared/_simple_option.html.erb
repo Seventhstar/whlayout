@@ -12,12 +12,11 @@
 
 <div class="panel panel-default">
 <div class="panel-heading table-heading"><%= list_header(@item.class.name) %></div>
-<table class="table table-striped">
+<table class="table table-striped" model="<%= @item.class.name %>">
   <tbody>
     <% @items.each do |item| %>
       <tr>
         <td><%= item.name %></td>
-        <td></td>
         <%= sp_edit_delete(item, item.parents_count )%>
       </tr>
     <% end %>

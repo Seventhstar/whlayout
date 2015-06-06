@@ -46,8 +46,29 @@ class AjaxController < ApplicationController
    end
 
    def upd_param
-       puts params
-  	render :nothing => true
+   	 if params['model'] && params['model']!='undefined'
+   	 	puts params        
+   	 	obj = Object.const_get(params['model']).find(params['id'])
+   	 	#puts obj.class
+   	 	if params['model']=='WhouseElement'
+   	 		if obj.element_name != params['upd']['element_name']
+   	 			el = obj.element
+   	 			el.name = params['upd']['element_name']
+   	 			el.save
+   	 		end
+   	 		if obj.count != params['upd']['count']
+   	 			obj.count = params['upd']['count']
+   	 			obj.save
+   	 		end
+   	   	else  
+   	   		new_name = params['upd']['name'].present? ? params['upd']['name'] : params['upd']['undefined']
+           if obj.name != new_name
+   	 		  obj.name  = new_name
+   	 		  obj.save
+   	 	   end
+  	    end   
+  	 end
+  	 render :nothing => true
    end
 
 end
