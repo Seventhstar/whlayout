@@ -31,7 +31,7 @@ class WhouseElementsController < ApplicationController
      @whels = @whels.where(query,qparams)
     end
 
-    @whels = @whels.joins(:whouse).order('whouses.name')
+    @whels = @whels.joins(:whouse).joins(:element).order('whouses.name, elements.name')
 
   end
 
