@@ -19,7 +19,7 @@ class WhouseElementsController < ApplicationController
     if params[:search]!=nil && params[:search]!=""
       @whels = WhouseElement.joins(:element)
       query = query == "" ? "": query+ " and "
-      query = query + "elements.name LIKE :key2" 
+      query = query + "lower(elements.name) LIKE lower(:key2)" 
       qparams.store( :key2, '%'+ params[:search].to_s+'%')
     else
       @whels = WhouseElement.all
