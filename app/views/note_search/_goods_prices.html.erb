@@ -1,0 +1,27 @@
+<% if @items.count >0 %>
+<div class="panel panel-default">
+<table class="table tableSorter table-striped table-hover">
+
+  <thead>
+    <tr>
+      <th>Наименование</th>
+      <th>Цена</th>
+      <th>Сайт</th>
+    </tr>
+  </thead>
+
+
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item[1][:title] %></td>
+        <td><%= item[1][:price] %></td>
+        <td><%= link_to item[1][:site],item[1][:link] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+</div>
+<% end %>

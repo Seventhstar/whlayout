@@ -1,0 +1,18 @@
+<h3>Поиск лучших цен:</h3>
+
+<div class="items_box_head">
+<%= form_tag whouses_path, :method => 'get', :id => "note_search" do %>
+  <div class="input-group left"> 
+    <%= text_field_tag :search, params[:search], :class => "search_area txt" %>
+  </div>
+  <label class="checkbox">
+     <%= check_box_tag :test, true, true %>
+     <span>Тест</span>
+  </label>
+
+<% end %>
+</div>
+
+<div class="goods_prices">
+	<%= render "goods_prices" %>
+</div>
