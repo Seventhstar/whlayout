@@ -133,7 +133,7 @@ require 'nokogiri'
 
 	def get_prices(name, test = false)
 		
-		if test
+		if test && !Rails.env.production?
 			page_citilink 	= "D:/www/ruby/disc_ex/citi_note.html"
 			page_ulmart		= "D:/www/ruby/disc_ex/game_ul.html"
 			page_ulmart2	= "D:/www/ruby/disc_ex/univ_ul.html"
