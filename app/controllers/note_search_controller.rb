@@ -150,6 +150,9 @@ require 'nokogiri'
 			page_club_photo_ru2 	= "http://club.foto.ru/secondhand2/?cat=0&man%5B0%5D=0&name=&system_lens=4208&city%5B0%5D=3104&state=0&cost1=3000&cost2=40000&page=2#listStart"
 			page_ulmart_photo = 'http://discount.ulmart.ru/discount/lens?sort=7&viewType=1&rec=true'
 			page_ulmart_photo2 = 'http://discount.ulmart.ru/discount/digital_camera?sort=7&viewType=1&rec=true'
+
+			page_ulmart_mb = 'http://www.ulmart.ru/discount/motherboards_for_intel?sort=7&viewType=1&rec=true&filters=197%3A46927%3B189751%3A249449%2C249448%3B189763%3A249474&brands=&warranties=&shops=&labels=&available=false&reserved=false&suborder=false&superPrice=false&specOffers=false'
+			page_citilink_mb = 'http://www.citilink.ru/discount/computers_and_notebooks/parts/motherboards/'
 		end		
 
 		showings ={}
