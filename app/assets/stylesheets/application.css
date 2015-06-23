@@ -76,6 +76,7 @@ span.icon_cancel{background: url('cancel.png') no-repeat;}
 td.editable{padding: 5px !important; }
 
 .w80{width: 80%;}
+.margin_top_20{margin-top: 20px;}
 .items_box_head {  margin: 0 0 10px 0; min-height: 20px;}
 .combobox{ margin-left: 10px; margin-right: 0;}
 

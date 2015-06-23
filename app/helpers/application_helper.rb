@@ -17,7 +17,7 @@ module ApplicationHelper
     end
   end
 
-  def edit_delete(element,subcount = nil)
+  def td_edit_delete(element,subcount = nil)
     content_tag :td,{:class=>"edit_delete"} do
      #ed = link_to "", edit_polymorphic_path(element), :class=>"icon icon_edit"
      ed = link_to image_tag('edit.png'), edit_polymorphic_path(element) 
@@ -80,6 +80,15 @@ module ApplicationHelper
     else
       cls
     end
+  end
+
+  def short_name(txt)
+  	if txt.length >130
+  		txt[0..130]+' ...'
+  	else
+  		txt
+  	end
+  	
   end
 
 

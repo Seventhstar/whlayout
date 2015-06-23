@@ -54,6 +54,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :layouts, 'Схемы', '/layouts'
     primary.item :goods_search, 'Поиск', '/goods_search'
     primary.item :goods_search, 'Поиск техники', '/note_search'
+    primary.item :goods_search, 'Параметры поиска', '/search_urls'
     primary.item :elements, image_tag('options.png'), '/options/elements', :class => 'li-right options'
 
     # Add an item which has a sub navigation (same params, but with block)

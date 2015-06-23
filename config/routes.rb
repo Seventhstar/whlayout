@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
+# edit in simple options
+  resources :search_urls
+  resources :search_sites
+  resources :search_categories
   resources :elements
+  resources :whouses
+
   resources :layouts
   resources :layout_elements
   resources :whouse_elements
@@ -9,7 +15,7 @@ Rails.application.routes.draw do
 #  get 'goods_search/:params'  => 'goods_search#index'
 
   resources :users
-  resources :whouses
+
 
   root :to => "whouse_elements#index"
 

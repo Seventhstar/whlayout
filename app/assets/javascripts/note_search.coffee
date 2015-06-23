@@ -18,3 +18,8 @@ $(document).ready ->
       clearTimeout timeoutId
       timeoutId = setTimeout('update_notesearch()', 800)
     false
+
+  $('#search_category').chosen(width: '200px', disable_search: true).on 'change', ->
+    $(".goods_prices").spin()
+    update_notesearch()
+

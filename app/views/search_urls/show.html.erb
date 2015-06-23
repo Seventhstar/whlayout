@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @search_url.url %>
+</p>
+
+<p>
+  <strong>Search site:</strong>
+  <%= @search_url.search_site_id %>
+</p>
+
+<p>
+  <strong>Search category:</strong>
+  <%= @search_url.search_category_id %>
+</p>
+
+<%= link_to 'Edit', edit_search_url_path(@search_url) %> |
+<%= link_to 'Back', search_urls_path %>
