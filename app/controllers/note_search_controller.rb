@@ -162,6 +162,8 @@ require 'nokogiri'
 					showings = showings.merge(parse_citilink(url.url))
 				when 'ulmart'
 					showings = showings.merge(parse_ulmart(url.url))
+				when 'club.foto.ru'
+					showings = showings.merge(parse_club_photo_ru(url.url))
 				end
 			end
 		end
