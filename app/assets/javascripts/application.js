@@ -23,8 +23,15 @@
 var showNotifications = function(){ 
   $nt = $(".alert"); 
   
-  setTimeout(function() {$nt.removeClass("in").addClass('out');}, 3000);
+  //setTimeout(function() {$nt.addClass("in");}, 1000);
+  setTimeout(function() {$nt.removeClass("in").addClass('out');}, 4000);
 }
+
+var show_ajax_message = function(msg, type) {
+    if (!type) {type = "success"};
+    $(".js-notes").html( '<div class="alert fade-in flash_'+type+'">'+msg+'</div>');    
+    showNotifications();
+};
 
 $( document ).ready(function() {
     showNotifications();
