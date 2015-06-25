@@ -20,10 +20,21 @@
 
 
 
+var showNotifications = function(){ 
+  $nt = $(".alert"); 
+  
+  setTimeout(function() {$nt.removeClass("in").addClass('out');}, 3000);
+}
+
+$( document ).ready(function() {
+    showNotifications();
+});
+
 $(function() {
 
   $( document ).ajaxStop(function() {
     $('table.tableSorter').tableSort();
+
   });
   $('table.tableSorter').tableSort();
 

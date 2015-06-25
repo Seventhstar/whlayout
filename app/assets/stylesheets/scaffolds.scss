@@ -61,3 +61,50 @@ div {
 .signin a:nth-child(2) { float: right;}
 .signin .btn { width: 100%; }
 .signin input{margin-bottom: 10px;}
+
+
+.btn_a.btn_reset {
+  background: #c3c3c3;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.btn_reset {
+  margin-right: 10px;
+  &:hover{color:white;}
+}
+
+.btn{float: left;}
+.btn_a, .form-actions .btn-success, a.btn-success, .input-group .btn-warning {
+  display: inline-block;
+  //background: #ff8411;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 19px 0 19px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 5px;
+  position: relative;
+}
+
+.btn:hover {opacity: 0.7;}
+.sub {float:left;}
+
+.flash_notice, .flash_success,.alert-success  {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.flash_error,.flash_alert, .flash_danger,.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.flash_warning, .alert-warning  {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+}

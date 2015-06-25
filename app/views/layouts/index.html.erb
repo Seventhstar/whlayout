@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Список схем</h1>
 
 <div class="panel panel-default">
@@ -16,7 +14,7 @@
     <% @layouts.each do |layout| %>
       <tr>
         <td><%= link_to layout.name, layout %></td>
-        <%= edit_delete(layout) %>
+        <%= td_edit_delete(layout) %>
       </tr>
     <% end %>
   </tbody>

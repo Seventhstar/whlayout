@@ -1,0 +1,64 @@
+.note.in {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.fauxShow, .dropdown.is-active .dropdown-menu, .nav.is-active .nav-list, .note.in, .is-selecting .reactBar {
+  height: auto;
+  opacity: 1;
+  overflow: visible;
+  visibility: visible;
+}
+
+.note--alert {
+  background: #d7a627;
+}
+
+.has-note {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 18;
+  width: 100%;
+}
+
+.has-note {
+  width: 18.75em;
+  //background: #a3dee8;
+}
+
+.note {
+  margin-left: 0;
+}
+
+.note {
+  background: #31a480;
+  border-radius: 3px;
+  color: #fff;
+  display: block;
+  font-size: 85%;
+  height: 100%;
+  margin: 0.625em;
+  opacity: 0;
+  overflow: hidden;
+  padding: 1.25em;
+  position: relative;
+  -webkit-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+  visibility: hidden;
+}
+
+
+.fauxHide, .dropdown-menu, .nav-list, .note, .reactBar {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.alert.out,.note.out{-webkit-transform:translateX(100%);-ms-transform:translateX(100%);transform:translateX(100%);-webkit-transition:all 0.4s ease-in-out;transition:all 0.4s ease-in-out}
+
+
