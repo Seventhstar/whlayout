@@ -3,8 +3,15 @@ require 'nokogiri'
 
 module ParseHelper
 
-	def detail_from_link(link,css, css2)
-		page = Nokogiri::HTML(open(link))
+	def detail_from_link(link,css, css2, cookie = nil)
+		#page = Nokogiri::HTML(open(link))
+		
+		if cookie
+			page = Nokogiri::HTML(open(link,'Cookie' => cookie))
+		else
+			page = Nokogiri::HTML(open(link))
+		end
+
 		detail = page.css(css)
 		detail = detail.empty? ? page.css(css2) : detail
 		detail = detail.text.gsub(/Срок окончания гарантии:/,'')
@@ -13,9 +20,14 @@ module ParseHelper
 	end
 
 
-	def parse_all( url, param_hash, site )
+	def parse_all( url, param_hash, site,name )
 
-		page = Nokogiri::HTML(open(url))
+		if param_hash[:cookie]
+			page = Nokogiri::HTML(open(url,'Cookie' => param_hash[:cookie]))
+		else
+			page = Nokogiri::HTML(open(url))
+		end
+
 		page.encoding ='utf-8'
 		showings = {}
 		items = page.css(param_hash[:items])
@@ -32,6 +44,7 @@ module ParseHelper
 		    	next if title.empty?
 		    end
 		    #p title.text,item.css(param_hash[:enabled])
+		    
 			
 			link  = title.attr('href')
 			link = item.css('.must_be_href').attr('title').value if link.nil?
@@ -49,7 +62,7 @@ module ParseHelper
 
 			case param_hash[:warranty][:method]
 			when 'page' # гарантия видна только на странице товара
-				warranty = detail_from_link(link,param_hash[:warranty],'.prop :contains("арантии")')
+				warranty = detail_from_link(link,param_hash[:warranty][:css],'.prop :contains("арантии")',param_hash[:cookie])
 			when 'last' # последнее совпадение
 				warranty = item.css(param_hash[:warranty][:css])
 				warranty = warranty.last.next_sibling.text
@@ -61,9 +74,17 @@ module ParseHelper
 			hash_params = { link: link, title: title, price: price, detail: detail, warranty: warranty, site: site}
 			if param_hash[:title].class.to_s == 'String'
 				hash_params[:title] = title.text		
+			elsif !param_hash[:title][:field].nil? && (param_hash[:title][:field].include? '+')
+				hash_params[:title] = title.text + ' '+hash_params[:detail]	
 			else
 				hash_params[:title] = hash_params[:detail]
 			end
+
+			if !name.nil? && !name.empty?
+		    	words = name.split(',')
+		    	c = words.any? {|word| hash_params[:title].include?(word)}
+		    	next if !c
+		    end
 
 			showings.store( price*10000000 + id, hash_params)
 		  end
@@ -71,7 +92,7 @@ module ParseHelper
 		showings
 	end	
 
-	def parse_citilink(url)
+	def parse_citilink(url,name)
 
 			showings = parse_all(url,
 							 {:items => ".content .item", 
@@ -80,11 +101,11 @@ module ParseHelper
 							  :link_pref => 'http://www.citilink.ru',
 							  :detail => '.descr',
 							  :price => '.r .price',
-							  :warranty => {:css=>'.prop :contains("Гарантия")',:method=>'page'} },'citilink')
+							  :warranty => {:css=>'.prop :contains("Гарантия")',:method=>'page'} },'citilink',name)
 
 	end
 
-	def parse_ulmart(url)
+	def parse_ulmart(url,name)
 		showings = parse_all(url,
 							 {:items => ".b-products__list .b-box__i", 
 							  :enabled => 'a.btn.disabled',
@@ -94,11 +115,11 @@ module ParseHelper
 							  :detail => '.b-product__descr',
 							  :href => '.must_be_href',
 							  :price => '.b-price__num',
-							  :warranty => {:css=>'.b-product__warranty', :sub => '/Гарантия/',:method=>'sub'} },'ulmart')
+							  :warranty => {:css=>'.b-product__warranty', :sub => '/Гарантия/',:method=>'sub'} },'ulmart',name)
 	end
 
 
-	def parse_club_photo_ru(url)
+	def parse_club_photo_ru(url,name)
 
 		showings = parse_all(url,
 							 {:items => ".lot_row .node", 
@@ -107,7 +128,22 @@ module ParseHelper
 							  :href => '.adv_link',
 							  :link_pref => 'http://club.foto.ru',
 							  :price => '.cost',
-							  :warranty => {:css=>'.row_name',:method=>'last'} },'club.foto.ru')		#:contains("азмещено")
+							  :warranty => {:css=>'.row_name',:method=>'last'} },'club.foto.ru',name)		#:contains("азмещено")
+	end
+
+	def parse_dns(url,name)
+		showings = parse_all(url,
+							 {:items => ".ec-price-item", 
+							  :id => {:method => 'link', :field=>'last'},
+							  :title => {:css=> '.ec-price-item-link', :field =>'title+detail', :contains=> ''},
+							  :link_pref => 'http://www.dns-shop.ru/',
+							  :detail => '.spec',
+							  :href => '.ec-price-item-link',
+							  :price => '.price .new',
+							  :cookie => 'city_path=spb',
+							  :warranty => {:css=>'.guarantee',:method=>'page'} 
+							  
+							  },'dns',name)
 	end
 
 	def get_prices(name, test = false)
@@ -141,13 +177,16 @@ module ParseHelper
 			cat.urls.each do |url|
 				case url.site.name
 				when 'citilink'
-					showings = showings.merge(parse_citilink(url.url))
+					showings = showings.merge(parse_citilink(url.url,name))
 				when 'ulmart'
-					showings = showings.merge(parse_ulmart(url.url))
-					#showings = showings.merge(parse_ulmart(page_ulmart2))
+					showings = showings.merge(parse_ulmart(url.url,name))
 				when 'club.foto.ru'
-					showings = showings.merge(parse_club_photo_ru(url.url))
+					showings = showings.merge(parse_club_photo_ru(url.url,name))
+				when 'dns'
+					showings = showings.merge(parse_dns(url.url,name))
 				end
+
+
 			end
 		end
 		showings = showings.sort
