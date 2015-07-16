@@ -5,7 +5,7 @@
     
     <%= f.select :search_site_id, content_tag(:option,'Сайт...',:value=>nil)+options_for_select(@sites.collect{ |u| [u.name, u.id] }, @search_url.search_site_id) %>
     <%= f.select :search_category_id, content_tag(:option,'Категория...',:value=>nil)+options_for_select(@categories.collect{ |u| [u.name, u.id] }, @search_url.search_category_id) %>
-    <%= f.input :url, :input_html => { type: 'text', :class => 'w80 margin_top_20' } %>
+    <%= f.text_area :url, :class => 'w80 margin_top_20'  %>
     <span class="copy">Copy</span>
   </div>
 </br>

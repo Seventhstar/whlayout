@@ -61,11 +61,17 @@ class AjaxController < ApplicationController
    	 			obj.save
    	 		end
    	   	else  
-   	   		new_name = params['upd']['name'].present? ? params['upd']['name'] : params['upd']['undefined']
-           if obj.name != new_name
-   	 		  obj.name  = new_name
-   	 		  obj.save
+
+   	   		#new_name = params['upd']['name'].present? ? params['upd']['name'] : params['upd']['undefined']
+          ## if obj.name != new_name
+   	 		  #obj.name  = new_name
+   	 		  #obj.save
+          params['upd'].each do |p|
+            #puts p
+            obj[p[0]] = p[1]
+            #obj   
    	 	   end
+         obj.save
   	    end   
   	 end
   	 render :nothing => true

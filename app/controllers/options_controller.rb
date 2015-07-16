@@ -10,24 +10,9 @@ class OptionsController < ApplicationController
       @page_data = "elements"
     end
 
-    puts params[:options_page]
-    case params[:options_page]
-    when "elements"
-      @items = Element.order(:name)
-      @item  = Element.new
-    when "whouses"
-      @items = Whouse.order(:name)
-      @item  = Whouse.new
-    when "search_categories"
-      @items = SearchCategory.order(:name)
-      @item  = SearchCategory.new
-    when "search_sites"
-      @items  = SearchSite.order(:name)
-      @item   = SearchSite.new
-    else
-
-      puts "You gave me #{a} -- I have no idea what to do with that."
-    end
+    @items = params[:options_page].classify.constantize.order(:name)
+    @item = params[:options_page].classify.constantize.new
+    
 
   end
 

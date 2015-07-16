@@ -82,7 +82,8 @@ module ParseHelper
 
 			if !name.nil? && !name.empty?
 		    	words = name.split(',')
-		    	c = words.any? {|word| hash_params[:title].include?(word)}
+		    	
+		    	c = words.any? {|word| hash_params[:title].downcase.include?(word.downcase)}
 		    	next if !c
 		    end
 

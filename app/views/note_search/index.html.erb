@@ -1,6 +1,11 @@
 <h3>Поиск лучших цен:</h3>
 
 <div class="items_box_head">
+
+<% @categories.each do |kw| %>
+    <%= hidden_field_tag "kw[#{kw.id}]", kw.keywords %>
+  <% end %> 
+
 <%= form_tag whouses_path, :method => 'get', :id => "note_search" do %>
   <div class="input-group left"> 
     <%= text_field_tag :search, params[:search], :class => "search_area txt" %>

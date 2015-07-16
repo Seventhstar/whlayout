@@ -21,5 +21,7 @@ $(document).ready ->
 
   $('#search_category').chosen(width: '200px', disable_search: true).on 'change', ->
     $(".goods_prices").spin()
-    update_notesearch()
+    kw_id = $('#search_category').val()
+    $('#search').val($('#kw_'+kw_id).val())
+    timeoutId = setTimeout('update_notesearch()', 800)
 
