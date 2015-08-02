@@ -7,10 +7,15 @@ module ParseHelper
 		#page = Nokogiri::HTML(open(link))
 		
 		if cookie
-			page = Nokogiri::HTML(open(link,'Cookie' => cookie))
+			catch (:done) do
+				pg = open(link,'Cookie' => cookie)
+			end
 		else
-			page = Nokogiri::HTML(open(link))
+			pg = open(link)
 		end
+
+		return "" if pg.nil? || pg.status[1]!='OK' 
+		page = Nokogiri::HTML(pg)
 
 		detail = page.css(css)
 		detail = detail.empty? ? page.css(css2) : detail
@@ -23,15 +28,20 @@ module ParseHelper
 	def parse_all( url, param_hash, site,name )
 
 		if param_hash[:cookie]
-			page = Nokogiri::HTML(open(url,'Cookie' => param_hash[:cookie]))
+			pg = open(url,'Cookie' => param_hash[:cookie])
 		else
-			page = Nokogiri::HTML(open(url))
+			pg = open(url)
 		end
 
-		page.encoding ='utf-8'
 		showings = {}
+		return if pg.status[1]!='OK' 
+
+		# if responde status 200 OK
+
+		page = Nokogiri::HTML(pg)
+		page.encoding ='utf-8'
+		
 		items = page.css(param_hash[:items])
-		#p items.count
 		items.each do |item|
 
   		  if param_hash[:enabled].nil? || item.css(param_hash[:enabled]).empty?
@@ -82,7 +92,6 @@ module ParseHelper
 
 			if !name.nil? && !name.empty?
 		    	words = name.split(',')
-		    	
 		    	c = words.any? {|word| hash_params[:title].downcase.include?(word.downcase)}
 		    	next if !c
 		    end
@@ -102,6 +111,7 @@ module ParseHelper
 							  :link_pref => 'http://www.citilink.ru',
 							  :detail => '.descr',
 							  :price => '.r .price',
+							  :cookie => 'forceOldSite=1',
 							  :warranty => {:css=>'.prop :contains("Гарантия")',:method=>'page'} },'citilink',name)
 
 	end
@@ -174,8 +184,9 @@ module ParseHelper
 		showings ={}
 		if params[:search_category] && params[:search_category]!='0'
 			cat = SearchCategory.find(params[:search_category])
-			p cat.urls.count
-			cat.urls.each do |url|
+			p "cat.urls.count:" + cat.urls.count.to_s
+			#if cat.urls
+			  cat.urls.each do |url| 
 				case url.site.name
 				when 'citilink'
 					showings = showings.merge(parse_citilink(url.url,name))
@@ -189,6 +200,7 @@ module ParseHelper
 
 
 			end
+		  #end
 		end
 		showings = showings.sort
 	
