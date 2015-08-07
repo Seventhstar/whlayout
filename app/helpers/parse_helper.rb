@@ -73,7 +73,7 @@ module ParseHelper
 
       
 
-      hash_params = { link: link, title: title, price: price, detail: detail, warranty: '', site: site}
+      hash_params = { link: link.gsub('//','/').gsub(':/','://'), title: title, price: price, detail: detail, warranty: '', site: site}
       if param_hash[:title].class.to_s == 'String'
         hash_params[:title] = title.text    
       elsif !param_hash[:title][:field].nil? && (param_hash[:title][:field].include? '+')
@@ -156,7 +156,7 @@ module ParseHelper
                 :link_pref => 'http://www.dns-shop.ru/',
                 :detail => '.spec',
                 :href => '.ec-price-item-link',
-                :price => '.price .new',
+                :price => '.price_g',
                 :cookie => 'city_path=spb',
                 :warranty => {:css=>'.guarantee',:method=>'page'} 
                 
