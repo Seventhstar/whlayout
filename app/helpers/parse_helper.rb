@@ -8,7 +8,8 @@ module ParseHelper
 		
 		if cookie
 			catch (:done) do
-				pg = open(link,'Cookie' => cookie)
+				lnk = link.to_s.gsub('//','/').gsub(':/','://')
+				pg = open(lnk,'Cookie' => cookie)
 			end
 		else
 			pg = open(link)
