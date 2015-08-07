@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   post "ajax/add_wh_el"
   post "ajax/del_wh_el"
   post "ajax/upd_param"
+  get "ajax/check_status"
+
 
   get    'options'  => 'options#edit'
   get    'options/:options_page'  => 'options#edit'

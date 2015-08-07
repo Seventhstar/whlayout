@@ -8,8 +8,17 @@ timeoutId = undefined
   param = $('form').serialize()
   $.get '/note_search?'+param, "", null, "script"
 
+@update_progress = ->
+  #alert(1)
+  $.get '/ajax/check_status', (data) ->
+    #alert 'Data Loaded: ' + data
+  #setTimeout('update_progress()', 1500)
 
 $(document).ready ->
+
+  if $('#progress').length > 0
+     setTimeout('update_progress()', 500);
+  
   $('#note_search input').keyup ->
     c = String.fromCharCode(event.keyCode)
     isWordcharacter = c.match(/\w/)

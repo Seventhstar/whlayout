@@ -1,15 +1,28 @@
 class AjaxController < ApplicationController
 
+
+  def check_status
+    #p "current_user.progress",current_user.progress
+    #render :show
+    #current_user.progress
+    #render  #:nothing => true
+    current_user
+    #render :json => @user.progress
+    #render  :nothing => true
+    render :json => [current_user.progress]
+
+  end
+
   def add_lay_el
-   if params[:lay_el][:layout_id] 
+    if params[:lay_el][:layout_id] 
       layout_element = LayoutElement.new
       layout_element.layout_id 	= params[:lay_el][:layout_id]
       layout_element.element_id = params[:lay_el][:element_id]
       layout_element.count 		= params[:lay_el][:count]
       layout_element.save	
-   end
-	render :nothing => true
-   end
+    end
+    render :nothing => true
+  end
 
    def del_lay_el
 	  if params[:el_id] 
