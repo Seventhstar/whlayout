@@ -4,8 +4,9 @@ class SearchUrlsController < ApplicationController
   # GET /search_urls
   # GET /search_urls.json
   def index
-    @search_urls = SearchUrl.all
 
+    @search_urls = SearchUrl.order(:search_category_id)
+    
   end
 
   # GET /search_urls/1

@@ -53,6 +53,7 @@ module ParseHelper
       else
         title = item.css(param_hash[:title][:css])
         next if title.empty?
+
       end
         #p title.text,item.css(param_hash[:enabled])
         
@@ -69,6 +70,9 @@ module ParseHelper
         id = title.attr(param_hash[:id][:field]).text.to_i
       when 'link'  
         id = link.split('/').last.to_i
+      when 'field'
+        p param_hash[:id][:field]
+        id = item.attr(param_hash[:id][:field]).split(param_hash[:id][:split]).last.to_i
       end
 
       
@@ -88,6 +92,8 @@ module ParseHelper
         next if !c
       end
 
+      
+
       if !param_hash[:warranty].nil?
         case param_hash[:warranty][:method]
         when 'page' # гарантия видна только на странице товара
@@ -95,6 +101,8 @@ module ParseHelper
         when 'last' # последнее совпадение
           warranty = item.css(param_hash[:warranty][:css])
           warranty = warranty.last.next_sibling.text
+        when 'split'
+          warranty = item.css(param_hash[:warranty][:css]).text.split(param_hash[:warranty][:split]).last
         when 'sub' # как подстрока 
           warranty = item.css(param_hash[:warranty][:css]).text
           warranty = warranty.sub(param_hash[:warranty][:sub],'').strip
@@ -105,6 +113,7 @@ module ParseHelper
       showings.store( price*10000000 + id, hash_params)
       end
     end
+    p 'showings.count:'+showings.count.to_s
     showings
   end 
 
@@ -153,7 +162,7 @@ module ParseHelper
                {:items => ".ec-price-item", 
                 :id => {:method => 'link', :field=>'last'},
                 :title => {:css=> '.ec-price-item-link', :field =>'title+detail', :contains=> ''},
-                :link_pref => 'http://www.dns-shop.ru/',
+                :link_pref => 'http://www.dns-shop.ru',
                 :detail => '.spec',
                 :href => '.ec-price-item-link',
                 :price => '.price_g',
@@ -161,6 +170,21 @@ module ParseHelper
                 :warranty => {:css=>'.guarantee',:method=>'page'} 
                 
                 },'dns',name)
+  end
+
+  def parse_onlinetrade(url,name)
+    showings = parse_all(url,
+               {:items => ".category_card__container", 
+                :id => {method: 'field', field: 'id', split: '_' },
+                :title => {:css=> '.h3 a', :field =>'title'},
+                :link_pref => 'http://spb.onlinetrade.ru',
+                :detail => '.category_card__item_data__text',
+                :href => '.h3 a',
+                :price => '.price_span',
+                #:cookie => 'city_path=spb',
+                :warranty => {:css=>'.category_card__codes_area span',:method=>'split', split: ':'} 
+                
+                },'onlinetrade',name)
   end
 
   def get_prices(name, test = false)
@@ -204,12 +228,14 @@ module ParseHelper
             showings = showings.merge(parse_club_photo_ru(url.url,name))
           when 'dns'
             showings = showings.merge(parse_dns(url.url,name))
+          when 'onlinetrade'
+            showings = showings.merge(parse_onlinetrade(url.url,name))
           end
           i=i+1
           current_user.update_attributes(:progress => (i.to_s+". "+url.site.name))
       end
       #end
-      current_user.update_attributes(:progress => 'done')
+      #current_user.update_attributes(:progress => 'done')
     end
     showings = showings.sort
   
