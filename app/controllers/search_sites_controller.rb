@@ -12,6 +12,7 @@ class SearchSitesController < ApplicationController
   # GET /search_sites/1
   # GET /search_sites/1.json
   def show
+    
   end
 
   # GET /search_sites/new
@@ -30,7 +31,7 @@ class SearchSitesController < ApplicationController
 
     respond_to do |format|
       if @search_site.save
-        format.html { redirect_to @search_site, notice: 'Search site was successfully created.' }
+        format.html { redirect_to 'options/search_sites', notice: 'Search site was successfully created.' }
         format.json { render :show, status: :created, location: @search_site }
       else
         format.html { render :new }

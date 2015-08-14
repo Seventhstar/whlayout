@@ -1,5 +1,9 @@
 require 'open-uri'
 require 'nokogiri'
+require 'openssl'
+
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
 
 module ParseHelper
 
@@ -26,11 +30,12 @@ module ParseHelper
   end
 
 
-  def parse_all( url, param_hash, site,name )
+  def parse_all( url, param_hash, site,name, count=0 )
 
     if param_hash[:cookie]
       pg = open(url,'Cookie' => param_hash[:cookie])
     else
+      p url
       pg = open(url)
     end
 
@@ -38,12 +43,17 @@ module ParseHelper
     return if pg.status[1]!='OK' 
 
     # if responde status 200 OK
+    p "site: "+ site
 
     page = Nokogiri::HTML(pg)
     page.encoding ='utf-8'
     
+    ind=0
     items = page.css(param_hash[:items])
     items.each do |item|
+
+      ind=ind+1
+      break if ind>count && count>0
 
       if param_hash[:enabled].nil? || item.css(param_hash[:enabled]).empty?
 
@@ -52,14 +62,23 @@ module ParseHelper
         title = item.css(param_hash[:href]) if title.empty?
       else
         title = item.css(param_hash[:title][:css])
+
+        #add = item.css(param_hash[:title][:add])
+        #p add, add.empty?
+        #title = add.empty? ? title : title+add.attr('title') 
+        #title = title.text+add.attr('title').text if !add.empty?
         next if title.empty?
 
       end
         #p title.text,item.css(param_hash[:enabled])
         
       
-      link  = title.attr('href')
-      link = item.css('.must_be_href').attr('title').value if link.nil?
+      link = title.attr('href')
+      
+      
+      link = item.css(param_hash[:href]).attr('href') if link.nil?
+      link = item.css(param_hash[:href]).attr('title') if link.nil?
+      #p link.class
       link = param_hash[:link_pref].nil? ? link : param_hash[:link_pref] + link
 
       price = item.css(param_hash[:price]).text.gsub(/([  ])/, '').sub(/ /,'').to_i
@@ -71,12 +90,15 @@ module ParseHelper
       when 'link'  
         id = link.split('/').last.to_i
       when 'field'
-        p param_hash[:id][:field]
+        #p param_hash[:id][:field]
         id = item.attr(param_hash[:id][:field]).split(param_hash[:id][:split]).last.to_i
+      when 'css'
+        id = item.css(param_hash[:id][:css]).text.split(param_hash[:id][:css]).last.to_i
+
       end
 
-      
-
+      link = link.text if link.class==Nokogiri::XML::Attr
+      #p link,link.class, link.class==Nokogiri::XML::Attr
       hash_params = { link: link.gsub('//','/').gsub(':/','://'), title: title, price: price, detail: detail, warranty: '', site: site}
       if param_hash[:title].class.to_s == 'String'
         hash_params[:title] = title.text    
@@ -139,7 +161,7 @@ module ParseHelper
                 :title => {:css=> '.b-product__title', :field =>'detail'},
                 :link_pref => 'http://discount.ulmart.ru',
                 :detail => '.b-product__descr',
-                :href => '.must_be_href',
+                :href => '.b-product__title .must_be_href.js-gtm-product-click',
                 :price => '.b-price__num',
                 :warranty => {:css=>'.b-product__warranty', :sub => '/Гарантия/',:method=>'sub'} },'ulmart',name)
   end
@@ -176,7 +198,7 @@ module ParseHelper
     showings = parse_all(url,
                {:items => ".category_card__container", 
                 :id => {method: 'field', field: 'id', split: '_' },
-                :title => {:css=> '.h3 a', :field =>'title'},
+                :title => '.h3 a',
                 :link_pref => 'http://spb.onlinetrade.ru',
                 :detail => '.category_card__item_data__text',
                 :href => '.h3 a',
@@ -185,6 +207,36 @@ module ParseHelper
                 :warranty => {:css=>'.category_card__codes_area span',:method=>'split', split: ':'} 
                 
                 },'onlinetrade',name)
+  end
+
+    def parse_xcom(url,name)
+    showings = parse_all(url,
+               {:items => ".item", 
+                :id => {method: 'css',css: '.center', split: '_' },
+                :title => {:css=> 'a', :field =>'detail'},#{css:'.desc', add: 'a'},
+                #:link_pref => 'http://www.xcomspb.ru/',
+                :detail => '.desc',
+                :href => 'a',
+                :price => '.cost-buy strong',
+                #:cookie => 'city_path=spb',
+                #:warranty => {:css=>'.category_card__codes_area span',:method=>'sub', sub: 'Официальная гарантия'} 
+                
+                },'xcom',name)
+  end
+
+  def parse_yamarket(url,name,count)
+    showings = parse_all(url,
+               {:items => ".snippet-card", 
+                :id => {method: 'css',css: '.center', split: '_' },
+                :title => {:css=> '.snippet-card__header-text', :field =>'detail'},#{css:'.desc', add: 'a'},
+                #:link_pref => 'http://www.xcomspb.ru/',
+                :detail => '.snippet-card__header-text',
+                :href => '.snippet-card__header-link',
+                :price => '.snippet-card__price',
+                #:cookie => 'city_path=spb',
+                #:warranty => {:css=>'.category_card__codes_area span',:method=>'sub', sub: 'Официальная гарантия'} 
+                
+                },'yandex',name,count)
   end
 
   def get_prices(name, test = false)
@@ -230,6 +282,10 @@ module ParseHelper
             showings = showings.merge(parse_dns(url.url,name))
           when 'onlinetrade'
             showings = showings.merge(parse_onlinetrade(url.url,name))
+          when 'xcomspb'
+            showings = showings.merge(parse_xcom(url.url,name))
+          when 'yandex'
+            showings = showings.merge(parse_yamarket(url.url,name,5))
           end
           i=i+1
           current_user.update_attributes(:progress => (i.to_s+". "+url.site.name))

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
 # edit in simple options
   resources :search_urls
-  resources :search_sites
+  resources :search_sites 
   resources :search_categories
   resources :elements
   resources :whouses
