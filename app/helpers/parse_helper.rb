@@ -81,7 +81,15 @@ module ParseHelper
       #p link.class
       link = param_hash[:link_pref].nil? ? link : param_hash[:link_pref] + link
 
-      price = item.css(param_hash[:price]).text.gsub(/([  ])/, '').sub(/ /,'').to_i
+      
+      price = item.css(param_hash[:price])
+
+      if price.count>1 
+        price = price[0]
+      end
+
+      price = price.text.gsub(/([  ])/, '').sub(/ /,'').to_i
+
       detail = item.css(param_hash[:detail]).text
       
       case param_hash[:id][:method]
@@ -161,7 +169,7 @@ module ParseHelper
                 :title => {:css=> '.b-product__title', :field =>'detail'},
                 :link_pref => 'http://discount.ulmart.ru',
                 :detail => '.b-product__descr',
-                :href => '.b-product__title .must_be_href.js-gtm-product-click',
+                :href => '.b-product__title .js-gtm-product-click',
                 :price => '.b-price__num',
                 :warranty => {:css=>'.b-product__warranty', :sub => '/Гарантия/',:method=>'sub'} },'ulmart',name)
   end
