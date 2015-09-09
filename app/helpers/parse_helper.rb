@@ -32,11 +32,21 @@ module ParseHelper
 
   def parse_all( url, param_hash, site,name, count=0 )
 
+    #p "site: " + site+ ", param_hash: " + param_hash.to_s
     if param_hash[:cookie]
       pg = open(url,'Cookie' => param_hash[:cookie])
     else
       p url
-      pg = open(url)
+      begin
+        pg = open(url)  
+      rescue OpenURI::HTTPError => error
+          pg = error.io
+          p pg.status
+      rescue Net::ReadTimeout => error
+         pg = error.io
+         p pg.status
+      end
+      
     end
 
     showings = {}
@@ -147,94 +157,73 @@ module ParseHelper
     showings
   end 
 
-  def parse_citilink(url,name)
 
-      showings = parse_all(url,
-               {:items => ".content .item", 
-                :id => {:method => 'link', :field=>'last'},
-                :title => '.l a',
-                :link_pref => 'http://www.citilink.ru',
-                :detail => '.descr',
-                :price => '.r .price',
-                :cookie => 'forceOldSite=1',
-                :warranty => {:css=>'.prop :contains("Гарантия")',:method=>'page'} },'citilink',name)
+  def get_params(site_name)
 
-  end
+    case site_name
+    when 'citilink'        
+     params = {:items => ".content .item", 
+      :id => {:method => 'link', :field=>'last'},
+      :title => '.l a',
+      :link_pref => 'http://www.citilink.ru',
+      :detail => '.descr',
+      :price => '.r .price',
+      :cookie => 'forceOldSite=1',
+      :warranty => {:css=>'.prop :contains("Гарантия")',:method=>'page'} }
 
-  def parse_ulmart(url,name)
-    showings = parse_all(url,
-               {:items => ".b-products__list .b-box__i", 
-                :enabled => 'a.btn.disabled',
-                :id => {:method => 'link', :field=>'last'},
-                :title => {:css=> '.b-product__title', :field =>'detail'},
-                :link_pref => 'http://discount.ulmart.ru',
-                :detail => '.b-product__descr',
-                :href => '.b-product__title .js-gtm-product-click',
-                :price => '.b-price__num',
-                :warranty => {:css=>'.b-product__warranty', :sub => '/Гарантия/',:method=>'sub'} },'ulmart',name)
-  end
+    when 'ulmart'
 
+     params = {:items => ".b-products__list .b-box__i", 
+      :enabled => 'a.btn.disabled',
+      :id => {:method => 'link', :field=>'last'},
+      :title => {:css=> '.b-product__title', :field =>'detail'},
+      :link_pref => 'http://discount.ulmart.ru',
+      :detail => '.b-product__descr',
+      :href => '.b-product__title .js-gtm-product-click',
+      :price => '.b-price__num',
+      :warranty => {:css=>'.b-product__warranty', :sub => '/Гарантия/',:method=>'sub'} }
+    when 'club.foto.ru'
 
-  def parse_club_photo_ru(url,name)
+     params ={:items => ".lot_row .node", 
+      :id => {:method => 'title', :field=>'rel'},
+      :title => '.row_name_first .adv_link',
+      :href => '.adv_link',
+      :link_pref => 'http://club.foto.ru',
+      :price => '.cost',
+      :warranty => {:css=>'.row_name',:method=>'last'} }
+    when 'dns'
+     params ={:items => ".ec-price-item", 
+      :id => {:method => 'link', :field=>'last'},
+      :title => {:css=> '.ec-price-item-link', :field =>'title+detail', :contains=> ''},
+      :link_pref => 'http://www.dns-shop.ru',
+      :detail => '.spec',
+      :href => '.ec-price-item-link',
+      :price => '.price_g',
+      :cookie => 'city_path=spb',
+      :warranty => {:css=>'.guarantee',:method=>'page'} }
+    when 'onlinetrade'
 
-    showings = parse_all(url,
-               {:items => ".lot_row .node", 
-                :id => {:method => 'title', :field=>'rel'},
-                :title => '.row_name_first .adv_link',
-                :href => '.adv_link',
-                :link_pref => 'http://club.foto.ru',
-                :price => '.cost',
-                :warranty => {:css=>'.row_name',:method=>'last'} },'club.foto.ru',name)   #:contains("азмещено")
-  end
+     params ={:items => ".category_card__container", 
+      :id => {method: 'field', field: 'id', split: '_' },
+      :title => '.h3 a',
+      :link_pref => 'http://spb.onlinetrade.ru',
+      :detail => '.category_card__item_data__text',
+      :href => '.h3 a',
+      :price => '.price_span',
+      :warranty => {:css=>'.category_card__codes_area span',:method=>'split', split: ':'} }
 
-  def parse_dns(url,name)
-    showings = parse_all(url,
-               {:items => ".ec-price-item", 
-                :id => {:method => 'link', :field=>'last'},
-                :title => {:css=> '.ec-price-item-link', :field =>'title+detail', :contains=> ''},
-                :link_pref => 'http://www.dns-shop.ru',
-                :detail => '.spec',
-                :href => '.ec-price-item-link',
-                :price => '.price_g',
-                :cookie => 'city_path=spb',
-                :warranty => {:css=>'.guarantee',:method=>'page'} 
-                
-                },'dns',name)
-  end
-
-  def parse_onlinetrade(url,name)
-    showings = parse_all(url,
-               {:items => ".category_card__container", 
-                :id => {method: 'field', field: 'id', split: '_' },
-                :title => '.h3 a',
-                :link_pref => 'http://spb.onlinetrade.ru',
-                :detail => '.category_card__item_data__text',
-                :href => '.h3 a',
-                :price => '.price_span',
-                #:cookie => 'city_path=spb',
-                :warranty => {:css=>'.category_card__codes_area span',:method=>'split', split: ':'} 
-                
-                },'onlinetrade',name)
-  end
-
-    def parse_xcom(url,name)
-    showings = parse_all(url,
-               {:items => ".item", 
+    when 'xcomspb'
+      params = {:items => ".item", 
                 :id => {method: 'css',css: '.center', split: '_' },
                 :title => {:css=> 'a', :field =>'detail'},#{css:'.desc', add: 'a'},
                 #:link_pref => 'http://www.xcomspb.ru/',
                 :detail => '.desc',
                 :href => 'a',
-                :price => '.cost-buy strong',
-                #:cookie => 'city_path=spb',
-                #:warranty => {:css=>'.category_card__codes_area span',:method=>'sub', sub: 'Официальная гарантия'} 
-                
-                },'xcom',name)
-  end
+                :price => '.cost-buy strong'}
 
-  def parse_yamarket(url,name,count)
-    showings = parse_all(url,
-               {:items => ".snippet-card", 
+    when 'yandex'
+
+             params = {:items => ".snippet-card", 
                 :id => {method: 'css',css: '.center', split: '_' },
                 :title => {:css=> '.snippet-card__header-text', :field =>'detail'},#{css:'.desc', add: 'a'},
                 #:link_pref => 'http://www.xcomspb.ru/',
@@ -244,8 +233,10 @@ module ParseHelper
                 #:cookie => 'city_path=spb',
                 #:warranty => {:css=>'.category_card__codes_area span',:method=>'sub', sub: 'Официальная гарантия'} 
                 
-                },'yandex',name,count)
+              }
   end
+  params 
+end
 
   def get_prices(name, test = false)
     
@@ -279,24 +270,28 @@ module ParseHelper
       current_user.update_attributes(:progress => 'start')
         i =0 
         cat.urls.each do |url| 
-          case url.site.name
-          when 'citilink'
-            showings = showings.merge(parse_citilink(url.url,name))
-          when 'ulmart'
-            showings = showings.merge(parse_ulmart(url.url,name))
-          when 'club.foto.ru'
-            showings = showings.merge(parse_club_photo_ru(url.url,name))
-          when 'dns'
-            showings = showings.merge(parse_dns(url.url,name))
-          when 'onlinetrade'
-            showings = showings.merge(parse_onlinetrade(url.url,name))
-          when 'xcomspb'
-            showings = showings.merge(parse_xcom(url.url,name))
-          when 'yandex'
-            showings = showings.merge(parse_yamarket(url.url,name,5))
-          end
+
+          p = get_params(url.site.name)
+          sh = parse_all(url.url,p,url.site.name,name)
+          showings = showings.merge(sh) if !sh.nil?
+          #case url.site.name
+          #when 'citilink'
+          #  showings = showings.merge(parse_citilink(url.url,name))
+          #when 'ulmart'
+          #  showings = showings.merge(parse_ulmart(url.url,name))
+          #when 'club.foto.ru'
+          #  showings = showings.merge(parse_club_photo_ru(url.url,name))
+          #when 'dns'
+          #  showings = showings.merge(parse_dns(url.url,name))
+          #when 'onlinetrade'
+          #  showings = showings.merge(parse_onlinetrade(url.url,name))
+          #when 'xcomspb'
+          #  showings = showings.merge(parse_xcom(url.url,name))
+          #when 'yandex'
+          #  showings = showings.merge(parse_yamarket(url.url,name,5))
+          #end
           i=i+1
-          current_user.update_attributes(:progress => (i.to_s+". "+url.site.name))
+          #current_user.update_attributes(:progress => (i.to_s+". "+url.site.name))
       end
       #end
       #current_user.update_attributes(:progress => 'done')
