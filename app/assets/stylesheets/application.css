@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= require nprogress
  */
 
 
@@ -45,11 +46,11 @@ input[type="text"]:focus,input[type="number"]:focus,#datepicker:focus,textarea:f
 
 .left {float: left;}
 .li-right, .right {  float: right !important;  margin-top: 0 !important; }
+
 .fullwidth{ width: 100%;}
 .navbar-inverse .navbar-nav>li>a {color: #aaa;}
-.navbar-inverse{
-  background: url("menu_bg_dark.png");
-}
+.navbar-inverse{ background: url("menu_bg_dark.png");}
+.navbar ul{ height: 32px;  }
 
 
 
@@ -83,3 +84,4 @@ td.editable{padding: 5px !important; }
 .control input[type='number']{height: 25px; vertical-align: bottom;}
 .control .chosen-container{margin-top: 0;}
 .control .btn-sm{vertical-align: bottom;margin-top: 1px;}
+

@@ -16,6 +16,7 @@
 //= require jquery.spin
 //= require twitter/bootstrap
 //= require chosen.jquery
+//= require nprogress
 //= require_tree .
 
 
@@ -39,11 +40,22 @@ $( document ).ready(function() {
 
 $(function() {
 
+  NProgress.configure({
+    showSpinner: false,
+    ease: 'ease',
+    speed: 300
+  });
+
+  NProgress.start();
+  NProgress.done();
+
+  $( document ).ajaxStart(function() {
+      NProgress.start();
+  });  
   $( document ).ajaxStop(function() {
     $('table.tableSorter').tableSort();
-
+    NProgress.done();
   });
-  $('table.tableSorter').tableSort();
 
 
   //var table = document.getElementById('edit');
