@@ -6,33 +6,20 @@ body {
   line-height: 18px;
 }
 
-p, ol, ul, td {
+p, ol, ul, td { 
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px;
 }
 
-pre {
-  background-color: #eee;
-  padding: 10px;
-  font-size: 11px;
+pre { background-color: #eee; padding: 10px; font-size: 11px; }
+
+div { &.field, &.actions { margin-bottom: 10px; } 
 }
 
-div {
-  &.field, &.actions {
-    margin-bottom: 10px;
-  }
-}
+#notice { color: green; }
 
-#notice {
-  color: green;
-}
-
-.field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table;
-}
+.field_with_errors { padding: 2px; background-color: red; display: table; }
 
 #error_explanation {
   width: 450px;
@@ -51,10 +38,7 @@ div {
     background-color: #c00;
     color: #fff;
   }
-  ul li {
-    font-size: 12px;
-    list-style: square;
-  }
+  ul li { font-size: 12px; list-style: square; }
 }
 
 .signin {  max-width: 500px;  padding: 20px 50px;  margin: 0px auto;  background: #F9F9F9;  border-radius: 5px;  margin-top: 30px;}
@@ -62,19 +46,10 @@ div {
 .signin .btn { width: 100%; }
 .signin input{margin-bottom: 10px;}
 
-
-.btn_a.btn_reset {
-  background: #c3c3c3;
-  text-decoration: none;
-  margin-left: 10px;
-}
-
-.btn_reset {
-  margin-right: 10px;
-  &:hover{color:white;}
-}
-
-.btn{float: left;}
+.btn {float: left;}
+.btn:hover {opacity: 0.7;}
+.btn_a.btn_reset { background: #c3c3c3; text-decoration: none; margin-left: 10px; }
+.btn_reset { margin-right: 10px; &:hover{color:white;} }
 .btn_a, .form-actions .btn-success, a.btn-success, .input-group .btn-warning {
   display: inline-block;
   //background: #ff8411;
@@ -88,23 +63,9 @@ div {
   position: relative;
 }
 
-.btn:hover {opacity: 0.7;}
+
 .sub {float:left;}
 
-.flash_notice, .flash_success,.alert-success  {
-  color: #3c763d;
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
-}
-
-.flash_error,.flash_alert, .flash_danger,.alert-danger {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
-}
-
-.flash_warning, .alert-warning  {
-  color: #8a6d3b;
-  background-color: #fcf8e3;
-  border-color: #faebcc;
-}
+.flash_notice, .flash_success,.alert-success  { color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; }
+.flash_error,.flash_alert, .flash_danger,.alert-danger { color: #a94442; background-color: #f2dede; border-color: #ebccd1; }
+.flash_warning, .alert-warning  { color: #8a6d3b; background-color: #fcf8e3; border-color: #faebcc; }

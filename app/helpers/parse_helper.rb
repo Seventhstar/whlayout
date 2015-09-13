@@ -12,7 +12,7 @@ module ParseHelper
     
     if cookie
       catch (:done) do
-        #p link
+        p link
         pg = open(link.gsub('//','/').gsub(':/','://'),'Cookie' => cookie)
       end
     else
@@ -84,20 +84,13 @@ module ParseHelper
         
       
       link = title.attr('href')
-      
-      
       link = item.css(param_hash[:href]).attr('href') if link.nil?
       link = item.css(param_hash[:href]).attr('title') if link.nil?
-      #p link.class
       link = param_hash[:link_pref].nil? ? link : param_hash[:link_pref] + link
 
       
       price = item.css(param_hash[:price])
-
-      if price.count>1 
-        price = price[0]
-      end
-
+      price = price[0] if price.count>1
       price = price.text.gsub(/([  ])/, '').sub(/ /,'').to_i
 
       detail = item.css(param_hash[:detail]).text
@@ -126,10 +119,24 @@ module ParseHelper
         hash_params[:title] = hash_params[:detail]
       end
 
+
       if !name.nil? && !name.empty?
-        words = name.split(',')
-        c = words.any? {|word| hash_params[:title].downcase.include?(word.downcase)}
-        next if !c
+         words=add_words=sub_words=nil
+         pp = name.gsub(/(&|-)/){'%'+$1}.split('%')
+         pp.each do |cp|
+          case cp[0]
+          when '&' # 
+            add_words = cp[1..-1].split(',') # слова которые также должны быть в наименовании
+          when '-'
+            sub_words = cp[1..-1].split(',') # слова которых не должно быть 
+          else
+            words = cp.split(',') # слова которые должны быть в наименовании
+          end      
+        end
+        #p "words: " + words.to_s  + ", add_words: " + add_words.to_s + ", sub_words: " +sub_words.to_s     
+        next if !words.any? {|word| hash_params[:title].downcase.include?(word.downcase)} if ((!words.nil?) && (words.count>0))
+        next if !add_words.any? {|word| hash_params[:title].downcase.include?(word.downcase)} if !add_words.nil?
+        next if sub_words.any? {|word| hash_params[:title].downcase.include?(word.downcase)} if !sub_words.nil?
       end
 
       
@@ -215,7 +222,7 @@ module ParseHelper
     when 'xcomspb'
       params = {:items => ".item", 
                 :id => {method: 'css',css: '.center', split: '_' },
-                :title => {:css=> 'a', :field =>'detail'},#{css:'.desc', add: 'a'},
+                :title => {:css=> 'a', :field =>'detail + title'},#{css:'.desc', add: 'a'},
                 #:link_pref => 'http://www.xcomspb.ru/',
                 :detail => '.desc',
                 :href => 'a',

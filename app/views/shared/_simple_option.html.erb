@@ -4,7 +4,7 @@
 <%= form_for(@item) do |f| %>
 <div class="itemAdd_form">
 <label class="left"><%= new_item_header(@item.class.name) %>:</label>
-<div class="inp left"><%= f.text_field :name, :class => 'txt' %><span class="sub btn btn-min btn-success mrg_l" id="btn-send"> Добавить</span></div>
+<div class="inp left"><%= f.text_field :name, :class => 'txt' %><span class="sub btn btn-min btn-success right" id="btn-send"> Добавить</span></div>
 </div>
 <% end %>
 
