@@ -6,7 +6,16 @@ class SearchUrlsController < ApplicationController
   def index
 
     @search_urls = SearchUrl.order(:search_category_id)
-    
+    @categories = SearchCategory.order(:name)
+    @sites = SearchSite.all
+
+    if params[:url_sites] && (params[:url_sites].to_i > 0)
+      @search_urls = @search_urls.where(:site=>params[:url_sites])
+    end
+    if params[:url_category] && (params[:url_category].to_i > 0)
+      @search_urls = @search_urls.where(:category=>params[:url_category])
+    end
+
   end
 
   # GET /search_urls/1

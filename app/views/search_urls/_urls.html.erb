@@ -1,0 +1,27 @@
+
+<div class="panel panel-default">
+      <div class="panel-heading table-heading"></div>
+      <table class="table table-striped table-hover" model="<%= @search_urls.class.name %>">
+
+  <thead>
+    <tr>
+      <th>Url</th>
+      <th width="150px;">Сайт</th>
+      <th width="150px;">Категория</th>
+      <th width="30px;"> </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @search_urls.each do |search_url| %>
+      <tr>
+        <td><%= short_name(search_url.url) %></td>
+        <td><%= search_url.site.name %></td>
+        <td><%= search_url.category.name %></td>
+        <%= td_edit_delete(search_url) %>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
