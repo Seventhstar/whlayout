@@ -9,12 +9,19 @@ module ParseHelper
 
   def detail_from_link(link,css, css2, cookie = nil)
     #page = Nokogiri::HTML(open(link))
-    
+    p link if link.index('.dns.')!=nil
     if cookie
-      catch (:done) do
-        p link
-        pg = open(link.gsub('//','/').gsub(':/','://'),'Cookie' => cookie)
+      #catch (:done) do
+      
+        _link = link.gsub('//','/').gsub(':/','://')
+
+      begin
+        pg = open(_link,'Cookie' => cookie)
+      rescue
+        puts 'ошибка открытия link'
+        return nil
       end
+        #return
     else
       pg = open(link)
     end
@@ -83,10 +90,14 @@ module ParseHelper
         #p title.text,item.css(param_hash[:enabled])
         
       
+      link_pref = 'http://'+url.split('//')[1].split('/')[0]
+      #p "link_pref: "+link_pref
+
       link = title.attr('href')
       link = item.css(param_hash[:href]).attr('href') if link.nil?
       link = item.css(param_hash[:href]).attr('title') if link.nil?
-      link = param_hash[:link_pref].nil? ? link : param_hash[:link_pref] + link
+      #link = param_hash[:link_pref].nil? ? link : param_hash[:link_pref] + link
+      link = param_hash[:link_pref].nil? ? link : link_pref + link
 
       
       price = item.css(param_hash[:price])

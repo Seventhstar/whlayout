@@ -3,11 +3,12 @@
 <div class="items_box_head">
 <%= form_tag whouses_path, :method => 'get', :id => "url_search" do %>
   <div class="input-group left"> 
-      <%= select_tag "url_category", content_tag(:option,'Категория...',:value=>0)+options_from_collection_for_select(@categories, "id", "name"), {:class => 'select'} %> 
-      <%= select_tag "url_sites", content_tag(:option,'Сайт...',:value=>0)+options_from_collection_for_select(@sites, "id", "name"), {:class => 'select'} %> 
+      <%= select_tag "url_sites", content_tag(:option,'Сайт...',:value=>0)+options_from_collection_for_select(@sites, "id", "name", @site), {:class => 'select'} %> 
+      <%= select_tag "url_category", content_tag(:option,'Категория...',:value=>0)+options_from_collection_for_select(@categories, "id", "name",@cathegory), {:class => 'select'} %> 
+      
   </div>
 <% end %>
-<%= link_to 'Новый адрес', new_search_url_path, class: "sub btn btn-success btn-min right" %>
+<%= link_to 'Новый адрес', new_search_url_path, class: "h25 btn btn-success btn-min right" %>
 </div>
 
 

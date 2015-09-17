@@ -6,7 +6,7 @@
     <tr>
       <th>Наименование</th>
       <th>Цена</th>
-      <th>Гар.</th>
+      <th width="110px;">Гарантия</th>
       <th>Сайт</th>
     </tr>
   </thead>
@@ -18,7 +18,7 @@
         <td><%= item[1][:title] %></td>
         <td><%= item[1][:price] %></td>
         <td><%= item[1][:warranty] %></td>
-        <td><%= link_to image_tag(item[1][:site]+".ico"),item[1][:link] %></td>
+        <td><%= link_to image_tag(item[1][:site]+".ico"),item[1][:link], target:"_blank" %></td>
       </tr>
     <% end %>
   </tbody>

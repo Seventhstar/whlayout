@@ -57,7 +57,7 @@ input[type="text"]:focus,input[type="number"]:focus,#datepicker:focus,textarea:f
 .element_name {float: left; }
 .mrg_l { margin-left: 10px; }
 
-.btn-min { padding: 2px 10px; font-size: 11px; line-height: 1.5; border-radius: 3px; vertical-align: top !important; }
+.btn-min { padding: 2px 10px; font-size: 11px; line-height: 1.5 !important; border-radius: 3px; vertical-align: top !important; }
 .btn-min2 { padding: 3px 10px; font-size: 12px; line-height: 1.5; border-radius: 3px; vertical-align: top !important; }
 
 .col-menu { position: relative; min-height: 1px; padding-left: 0; padding-right: 15px; width: 150; float: left; }
@@ -74,7 +74,9 @@ span.icon_cancel{background: url('cancel.png') no-repeat;}
 
 td.editable{padding: 5px !important; }
 
+.h25{height: 25px !important;}
 .w80{width: 80%;}
+.w260{width: 260px;}
 .margin_top_20{margin-top: 20px;}
 .items_box_head {  margin: 0 0 10px 0; min-height: 20px;}
 .combobox{ margin-left: 10px; margin-right: 0;}

@@ -5,8 +5,9 @@
 
   <thead>
     <tr>
+      <th></th>
       <th>Url</th>
-      <th width="150px;">Сайт</th>
+      
       <th width="150px;">Категория</th>
       <th width="30px;"> </th>
     </tr>
@@ -15,8 +16,9 @@
   <tbody>
     <% @search_urls.each do |search_url| %>
       <tr>
+        <td><%= link_to image_tag(search_url.site.name+".ico"),search_url.url, target:"_blank" %></td>
         <td><%= short_name(search_url.url) %></td>
-        <td><%= search_url.site.name %></td>
+
         <td><%= search_url.category.name %></td>
         <%= td_edit_delete(search_url) %>
         

@@ -9,6 +9,8 @@ class SearchUrlsController < ApplicationController
     @categories = SearchCategory.order(:name)
     @sites = SearchSite.all
 
+    @site = params[:url_sites]
+    @cathegory = params[:url_category]
     if params[:url_sites] && (params[:url_sites].to_i > 0)
       @search_urls = @search_urls.where(:site=>params[:url_sites])
     end

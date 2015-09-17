@@ -10,10 +10,10 @@
 
 <%= form_tag whouses_path, :method => 'get', :id => "note_search" do %>
   <div class="input-group left"> 
-    <%= text_field_tag :search, params[:search], :class => "search_area txt" %>
+    <%= text_field_tag :search, params[:search], :class => "search_area txt h25 w260" %>
   </div>
   <label class="combobox">
-	<%= select_tag "search_category", content_tag(:option,'Категория...',:value=>0)+options_from_collection_for_select(@categories, "id", "name",:selected=>@param_category), {:class => 'select'} %> 
+	<%= select_tag "search_category", content_tag(:option,'Категория...',:value=>0)+options_from_collection_for_select(@categories, "id", "name",@cathegory), {:class => 'select'} %> 
   </label>
 
 

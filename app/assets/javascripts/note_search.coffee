@@ -6,7 +6,9 @@ timeoutId = undefined
 
 @update_notesearch = ->
   param = $('form').serialize()
-  $.get '/note_search?'+param, "", null, "script"
+  url = 'note_search?'+param
+  $.get url, "", null, "script"
+  setLoc(url);
 
 @update_progress = ->
   #alert(1)
