@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805103314) do
+ActiveRecord::Schema.define(version: 20151118150909) do
 
   create_table "elements", force: :cascade do |t|
     t.string   "name"
@@ -50,8 +50,9 @@ ActiveRecord::Schema.define(version: 20150805103314) do
     t.string   "url"
     t.integer  "search_site_id"
     t.integer  "search_category_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.boolean  "disabled",           default: false
   end
 
   create_table "users", force: :cascade do |t|

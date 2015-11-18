@@ -7,7 +7,9 @@
     <%= f.select :search_category_id, content_tag(:option,'Категория...',:value=>nil)+options_for_select(@categories.collect{ |u| [u.name, u.id] }, @search_url.search_category_id) %>
     <%= f.text_area :url, :class => 'w80 margin_top_20'  %>
     <span class="copy">Copy</span>
+
   </div>
+  <div class="inp_btn checkbox active"><%= f.check_box :disabled %></div>Отключить</label>
 </br>
   <div class="form-actions">
     <%= f.button :submit, "Записать", class: 'btn-success' %>

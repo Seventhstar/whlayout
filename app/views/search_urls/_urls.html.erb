@@ -9,6 +9,7 @@
       <th>Url</th>
       
       <th width="150px;">Категория</th>
+      <th></th>
       <th width="30px;"> </th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
         <td><%= short_name(search_url.url) %></td>
 
         <td><%= search_url.category.name %></td>
+        <td><%= search_url.disabled %></td>
         <%= td_edit_delete(search_url) %>
         
       </tr>

@@ -86,6 +86,6 @@ class SearchUrlsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def search_url_params
-      params.require(:search_url).permit(:url, :search_site_id, :search_category_id)
+      params.require(:search_url).permit(:url, :search_site_id, :search_category_id, :disabled)
     end
 end

@@ -287,32 +287,13 @@ end
       #if cat.urls
       current_user.update_attributes(:progress => 'start')
         i =0 
-        cat.urls.each do |url| 
+        cat.urls.where(disabled: false).each do |url| 
 
           p = get_params(url.site.name)
           sh = parse_all(url.url,p,url.site.name,name)
           showings = showings.merge(sh) if !sh.nil?
-          #case url.site.name
-          #when 'citilink'
-          #  showings = showings.merge(parse_citilink(url.url,name))
-          #when 'ulmart'
-          #  showings = showings.merge(parse_ulmart(url.url,name))
-          #when 'club.foto.ru'
-          #  showings = showings.merge(parse_club_photo_ru(url.url,name))
-          #when 'dns'
-          #  showings = showings.merge(parse_dns(url.url,name))
-          #when 'onlinetrade'
-          #  showings = showings.merge(parse_onlinetrade(url.url,name))
-          #when 'xcomspb'
-          #  showings = showings.merge(parse_xcom(url.url,name))
-          #when 'yandex'
-          #  showings = showings.merge(parse_yamarket(url.url,name,5))
-          #end
           i=i+1
-          #current_user.update_attributes(:progress => (i.to_s+". "+url.site.name))
       end
-      #end
-      #current_user.update_attributes(:progress => 'done')
     end
     showings = showings.sort
   

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :whouse_elements
   resources :goods_search
   resources :note_search
+  resources :usd
 #  get 'goods_search/:params'  => 'goods_search#index'
 
   resources :users
