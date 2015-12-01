@@ -36,10 +36,13 @@ module ParseHelper
     detail
   end
 
+  #
 
-  def parse_all( url, param_hash, site,name, count=0 )
+  def parse_all( url, site, name, count=0 )
 
+    param_hash = get_params(site)
     #p "site: " + site+ ", param_hash: " + param_hash.to_s
+    
     if param_hash[:cookie]
       pg = open(url,'Cookie' => param_hash[:cookie])
     else
@@ -97,8 +100,8 @@ module ParseHelper
       link = item.css(param_hash[:href]).attr('href') if link.nil?
       link = item.css(param_hash[:href]).attr('title') if link.nil?
       #link = param_hash[:link_pref].nil? ? link : param_hash[:link_pref] + link
-      link = param_hash[:link_pref].nil? ? link : link_pref + link
-
+      link = param_hash[:link_pref].nil? ? link.text : link_pref + link
+      p link
       
       price = item.css(param_hash[:price])
       price = price[0] if price.count>1
@@ -239,6 +242,17 @@ module ParseHelper
                 :href => 'a',
                 :price => '.cost-buy strong'}
 
+    when 'dh'
+      params ={:items => ".cfds_category_row", 
+      :id => {:method => 'link', :field=>'last'},#:title => {:css=> '.ipsType_subtitle a', :field =>'detail + title'}, #'a',
+      
+      :title => '.ipsType_subtitle a',
+      :detail => '.desc',
+      :href => '.ipsType_subtitle a',
+      :price => '.priceBadge',
+      :warranty => {:css=>'.ipsList_data :contains("Город") .row_data',:method=>'page'} 
+    }                 
+
     when 'yandex'
 
              params = {:items => ".snippet-card", 
@@ -257,40 +271,16 @@ module ParseHelper
 end
 
   def get_prices(name, test = false)
-    
-    if test && !Rails.env.production?
-      page_citilink   = "D:/www/ruby/disc_ex/citi_note.html"
-      page_ulmart   = "D:/www/ruby/disc_ex/game_ul.html"
-      page_ulmart2  = "D:/www/ruby/disc_ex/univ_ul.html"
-      page_club_photo_ru  = "http://club.foto.ru/secondhand2/?cat=0&man%5B%5D=0&name=&system_lens=4208&city%5B%5D=3104&state=0&cost1=3000&cost2=40000"
-      page_club_photo_ru2 = "http://club.foto.ru/secondhand2/?cat=0&man%5B0%5D=0&name=&system_lens=4208&city%5B0%5D=3104&state=0&cost1=3000&cost2=40000&page=2#listStart"
-      #page_ulmart2   = "http://discount.ulmart.ru/discount/notebooks_5202_10454?sort=7&viewType=1&rec=true&filters=346%3A1201%3B347%3A18720%2C8712%3B644%3A2374%2C2376%3B5472%3A20331%2C95965%3B189910%3A249219%2C249218%3B189922%3A249244&brands=&warranties=&shops=&labels=&available=false&reserved=false&suborder=false&superPrice=false&specOffers=false"
-      page_ulmart_photo = 'http://discount.ulmart.ru/discount/lens?sort=7&viewType=1&rec=true'
-      page_ulmart_photo2 = 'http://discount.ulmart.ru/discount/digital_camera?sort=7&viewType=1&rec=true'
-    else
-      page_citilink   = "http://www.citilink.ru/discount/mobile/notebooks/?available=&multy[]=2805_3&multy[]=2807_3&?available=&multy[]=2805_3&multy[]=2807_3&"
-      page_ulmart   = "http://discount.ulmart.ru/discount/notebooks_5202_10444?sort=0&viewType=1&rec=true&extended=true"
-      page_ulmart2  = "http://discount.ulmart.ru/discount/notebooks_5202_10454?sort=7&viewType=1&rec=false&filters=347%3A18720%2C8712%3B644%3A2374%2C2376%3B5472%3A20331%3B190722%3A250070%2C250071%3B190731%3A250092&brands=3567%2C120%2C20%2C210%2C42%2C4515&warranties=&shops=&labels=&available=false&reserved=false&suborder=false&superPrice=false&specOffers=false"
-      page_club_photo_ru  = "http://club.foto.ru/secondhand2/?cat=0&man%5B%5D=0&name=&system_lens=4208&city%5B%5D=3104&state=0&cost1=3000&cost2=40000"
-      page_club_photo_ru2   = "http://club.foto.ru/secondhand2/?cat=0&man%5B0%5D=0&name=&system_lens=4208&city%5B0%5D=3104&state=0&cost1=3000&cost2=40000&page=2#listStart"
-      page_ulmart_photo = 'http://discount.ulmart.ru/discount/lens?sort=7&viewType=1&rec=true'
-      page_ulmart_photo2 = 'http://discount.ulmart.ru/discount/digital_camera?sort=7&viewType=1&rec=true'
-
-      page_ulmart_mb = 'http://www.ulmart.ru/discount/motherboards_for_intel?sort=7&viewType=1&rec=true&filters=197%3A46927%3B189751%3A249449%2C249448%3B189763%3A249474&brands=&warranties=&shops=&labels=&available=false&reserved=false&suborder=false&superPrice=false&specOffers=false'
-      page_citilink_mb = 'http://www.citilink.ru/discount/computers_and_notebooks/parts/motherboards/'
-    end   
 
     showings ={}
     if params[:search_category] && params[:search_category]!='0'
       cat = SearchCategory.find(params[:search_category])
       p "cat.urls.count:" + cat.urls.count.to_s
-      #if cat.urls
+
       current_user.update_attributes(:progress => 'start')
         i =0 
         cat.urls.where(disabled: false).each do |url| 
-
-          p = get_params(url.site.name)
-          sh = parse_all(url.url,p,url.site.name,name)
+          sh = parse_all(url.url,url.site.name,name)
           showings = showings.merge(sh) if !sh.nil?
           i=i+1
       end
