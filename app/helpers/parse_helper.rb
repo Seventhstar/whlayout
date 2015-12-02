@@ -9,7 +9,7 @@ module ParseHelper
 
   def detail_from_link(link,css, css2, cookie = nil)
     #page = Nokogiri::HTML(open(link))
-    p link if link.index('.dns.')!=nil
+    #p link if link.index('.dns.')!=nil
     if cookie
       #catch (:done) do
       
@@ -101,7 +101,7 @@ module ParseHelper
       link = item.css(param_hash[:href]).attr('title') if link.nil?
       #link = param_hash[:link_pref].nil? ? link : param_hash[:link_pref] + link
       link = param_hash[:link_pref].nil? ? link.text : link_pref + link
-      p link
+      #p link
       
       price = item.css(param_hash[:price])
       price = price[0] if price.count>1
@@ -252,6 +252,17 @@ module ParseHelper
       :price => '.priceBadge',
       :warranty => {:css=>'.ipsList_data :contains("Город") .row_data',:method=>'page'} 
     }                 
+
+    when 'avito'
+      params ={:items => ".item_table", 
+      :id => {:method => 'link', :field=>'last'},#:title => {:css=> '.ipsType_subtitle a', :field =>'detail + title'}, #'a',
+      
+      :title => '.title a',
+      #:detail => '.desc',
+      :href => '.title a',
+      :price => '.about',
+      :warranty => {:css=>'.data:nth-child(2)',:method=>'css'} 
+    }  
 
     when 'yandex'
 
