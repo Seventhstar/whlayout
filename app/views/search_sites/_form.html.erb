@@ -1,9 +1,23 @@
 <%= simple_form_for(@search_site) do |f| %>
   <div class="form-inputs">
     <%= f.input :name %>
+<%= f.input :items %>
+<%= f.input :id_method %>
+<%= f.input :id_field %>
+<%= f.input :id_split %>
+<%= f.input :title %>
+<%= f.input :link_pref %>
+<%= f.input :detail %>
+<%= f.input :href %>
+<%= f.input :price %>
+<%= f.input :cookie %>
+<%= f.input :warranty_css %>
+<%= f.input :warranty_method %>
+<%= f.input :warranty_split %>
+
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Записать", class: 'btn-success' %>
   </div>
-<% end %>
+<% end  %>

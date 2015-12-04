@@ -259,6 +259,7 @@ module ParseHelper
       
       :title => '.title a',
       #:detail => '.desc',
+      :link_pref => 'http://www.avito.ru/',
       :href => '.title a',
       :price => '.about',
       :warranty => {:css=>'.data:nth-child(2)',:method=>'css'} 

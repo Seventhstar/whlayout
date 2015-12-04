@@ -1,6 +1,7 @@
-<h1>Listing Search Sites</h1>
+<div class="panel panel-default">
+      <div class="panel-heading table-heading"></div>
+      <table class="table table-striped table-hover" model="<%= @search_urls.class.name %>">
 
-<table>
   <thead>
     <tr>
       <th>Name</th>
@@ -12,9 +13,7 @@
     <% @search_sites.each do |search_site| %>
       <tr>
         <td><%= search_site.name %></td>
-        <td><%= link_to 'Show', search_site %></td>
-        <td><%= link_to 'Edit', edit_search_site_path(search_site) %></td>
-        <td><%= link_to 'Destroy', search_site, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<%= td_edit_delete(search_site) %>
       </tr>
     <% end %>
   </tbody>

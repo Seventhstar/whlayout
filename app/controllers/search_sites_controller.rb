@@ -31,7 +31,7 @@ class SearchSitesController < ApplicationController
 
     respond_to do |format|
       if @search_site.save
-        format.html { redirect_to 'options/search_sites', notice: 'Search site was successfully created.' }
+        format.html { redirect_to search_sites_url, notice: 'Search site was successfully created.' }
         format.json { render :show, status: :created, location: @search_site }
       else
         format.html { render :new }
@@ -45,7 +45,7 @@ class SearchSitesController < ApplicationController
   def update
     respond_to do |format|
       if @search_site.update(search_site_params)
-        format.html { redirect_to @search_site, notice: 'Search site was successfully updated.' }
+        format.html { redirect_to search_sites_url, notice: 'Search site was successfully updated.' }
         format.json { render :show, status: :ok, location: @search_site }
       else
         format.html { render :edit }
@@ -72,6 +72,6 @@ class SearchSitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def search_site_params
-      params.require(:search_site).permit(:name)
+      params.require(:search_site).permit(:name,:items,:id_method,:id_field,:id_split,:title,:link_pref,:detail,:href,:price,:cookie,:warranty_css,:warranty_method,:warranty_split)
     end
 end

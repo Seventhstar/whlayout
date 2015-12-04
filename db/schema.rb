@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151118150909) do
+ActiveRecord::Schema.define(version: 20151204124402) do
 
   create_table "elements", force: :cascade do |t|
     t.string   "name"
@@ -42,8 +42,21 @@ ActiveRecord::Schema.define(version: 20151118150909) do
 
   create_table "search_sites", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "items"
+    t.string   "id_method"
+    t.string   "id_field"
+    t.string   "id_split"
+    t.string   "title"
+    t.string   "link_pref"
+    t.string   "detail"
+    t.string   "href"
+    t.string   "price"
+    t.string   "cookie"
+    t.string   "warranty_css"
+    t.string   "warranty_method"
+    t.string   "warranty_split"
   end
 
   create_table "search_urls", force: :cascade do |t|
