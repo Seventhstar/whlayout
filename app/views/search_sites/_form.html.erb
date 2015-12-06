@@ -1,21 +1,31 @@
 <%= simple_form_for(@search_site) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :name %>
-<%= f.input :items %>
-<%= f.input :id_method %>
-<%= f.input :id_field %>
-<%= f.input :id_split %>
-<%= f.input :title %>
-<%= f.input :link_pref %>
-<%= f.input :detail %>
-<%= f.input :href %>
-<%= f.input :price %>
-<%= f.input :cookie %>
-<%= f.input :warranty_css %>
-<%= f.input :warranty_method %>
-<%= f.input :warranty_split %>
 
-  </div>
+<div class="panel panel-default">
+<div class="panel-heading table-heading"><label>Свойства разбора сайта:</label> <%= f.input :name, label: false %></div>
+
+<table class="table table-striped table-hover" model="<%= @search_urls.class.name %>">
+
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>css/field</th>
+      <th>Method</th>
+      <th>split</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<tr><td>items</td><td><%= f.input :items, label: false %></td><td>cookie</td><td><%= f.input :cookie, label: false %></td></tr>
+  	<tr><td>id</td><td><%= f.input :id_field, label: false %></td><td><%= f.input :id_method, label: false %></td><td><%= f.input :id_split, label: false %>
+  		</td></tr>
+  	<tr><td>title</td><td><%= f.input :title, label: false %></td><td><%= f.input :title_field, label: false %></td><td></td></tr>
+  	<tr><td>href</td><td><%= f.input :href, label: false %></td><td>link_pref</td><td><%= f.input :link_pref, label: false %></td></tr>
+  	<tr><td>detail</td><td><%= f.input :detail, label: false %></td><td></td><td></td></tr>
+  	
+  	<tr><td>price</td><td><%= f.input :price, label: false %></td><td></td><td></td></tr>
+  	<tr><td>warranty</td><td><%= f.input :warranty_css, label: false %></td><td><%= f.input :warranty_method, label: false %></td><td><%= f.input :warranty_split, label: false %></td></tr>
+  </tbody>
+  </table>
+</div>
 
   <div class="form-actions">
     <%= f.button :submit, "Записать", class: 'btn-success' %>

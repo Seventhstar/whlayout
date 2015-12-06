@@ -40,11 +40,10 @@ module ParseHelper
 
   def parse_all( url, site, name, count=0 )
 
-    param_hash = get_params(site)
-    #p "site: " + site+ ", param_hash: " + param_hash.to_s
+    param_hash = get_params(site.name)
     
-    if param_hash[:cookie]
-      pg = open(url,'Cookie' => param_hash[:cookie])
+    if !site.cookie.empty?
+      pg = open(url,'Cookie' => site.cookie)
     else
       p url
       begin
@@ -61,15 +60,15 @@ module ParseHelper
 
     showings = {}
     return if pg.status[1]!='OK' 
-
-    # if responde status 200 OK
-    p "site: "+ site
+  
+    p "site: "+ site.name
 
     page = Nokogiri::HTML(pg)
     page.encoding ='utf-8'
     
     ind=0
-    items = page.css(param_hash[:items])
+   # items = page.css(param_hash[:items])
+    items = page.css(site.items)
     items.each do |item|
 
       ind=ind+1
@@ -77,19 +76,24 @@ module ParseHelper
 
       if param_hash[:enabled].nil? || item.css(param_hash[:enabled]).empty?
 
-      if param_hash[:title].class.to_s == 'String'
-        title = item.css(param_hash[:title])
-        title = item.css(param_hash[:href]) if title.empty?
-      else
-        title = item.css(param_hash[:title][:css])
+      #if param_hash[:title].class.to_s == 'String'
+      #  title = item.css(param_hash[:title])
+      #  title = item.css(param_hash[:href]) if title.empty?
+      #else
+      #  title = item.css(param_hash[:title][:css])
 
         #add = item.css(param_hash[:title][:add])
         #p add, add.empty?
         #title = add.empty? ? title : title+add.attr('title') 
         #title = title.text+add.attr('title').text if !add.empty?
-        next if title.empty?
+      #  next if title.empty?
 
-      end
+      #end
+      
+      title = item.css(site.title)
+      title = item.css(site.href) if title.empty?
+      next if title.empty?
+      
         #p title.text,item.css(param_hash[:enabled])
         
       
@@ -124,7 +128,7 @@ module ParseHelper
 
       link = link.text if link.class==Nokogiri::XML::Attr
       #p link,link.class, link.class==Nokogiri::XML::Attr
-      hash_params = { link: link.gsub('//','/').gsub(':/','://'), title: title, price: price, detail: detail, warranty: '', site: site}
+      hash_params = { link: link.gsub('//','/').gsub(':/','://'), title: title, price: price, detail: detail, warranty: '', site: site.name}
       if param_hash[:title].class.to_s == 'String'
         hash_params[:title] = title.text    
       elsif !param_hash[:title][:field].nil? && (param_hash[:title][:field].include? '+')
@@ -203,6 +207,7 @@ module ParseHelper
       :href => '.b-product__title .js-gtm-product-click',
       :price => '.b-price__num',
       :warranty => {:css=>'.b-product__warranty', :sub => '/Гарантия/',:method=>'sub'} }
+
     when 'club.foto.ru'
 
      params ={:items => ".lot_row .node", 
@@ -292,7 +297,7 @@ end
       current_user.update_attributes(:progress => 'start')
         i =0 
         cat.urls.where(disabled: false).each do |url| 
-          sh = parse_all(url.url,url.site.name,name)
+          sh = parse_all(url.url,url.site,name)
           showings = showings.merge(sh) if !sh.nil?
           i=i+1
       end

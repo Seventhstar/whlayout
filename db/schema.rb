@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204124402) do
+ActiveRecord::Schema.define(version: 20151205055017) do
 
   create_table "elements", force: :cascade do |t|
     t.string   "name"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20151204124402) do
     t.string   "warranty_css"
     t.string   "warranty_method"
     t.string   "warranty_split"
+    t.string   "title_field"
   end
 
   create_table "search_urls", force: :cascade do |t|
