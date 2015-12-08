@@ -15,14 +15,14 @@
   </thead>
   <tbody>
   	<tr><td>items</td><td><%= f.input :items, label: false %></td><td>disabled</td><td><%= f.input :disabled, label: false %></td></tr>
-  	<tr><td>id</td><td><%= f.input :id_field, label: false %></td><td><%= f.input :id_method, label: false %></td><td><%= f.input :id_split, label: false %>
+  	<tr><td>id</td><td><%= f.input :id_field, label: false %></td><td><%= f.select :id_method,options_for_select(@id_arr,@search_site.id_method) %></td><td><%= f.input :id_split, label: false %>
   		</td></tr>
   	<tr><td>title</td><td><%= f.input :title, label: false %></td><td><%= f.input :title_field, label: false %></td><td></td></tr>
   	<tr><td>href</td><td><%= f.input :href, label: false %></td><td>link_pref</td><td><%= f.input :link_pref, label: false %></td></tr>
   	<tr><td>detail</td><td><%= f.input :detail, label: false %></td><td>cookie</td><td><%= f.input :cookie, label: false %></td></tr>
   	
   	<tr><td>price</td><td><%= f.input :price, label: false %></td><td></td><td></td></tr>
-  	<tr><td>warranty</td><td><%= f.input :warranty_css, label: false %></td><td><%= f.input :warranty_method, label: false %></td><td><%= f.input :warranty_split, label: false %></td></tr>
+  	<tr><td>warranty</td><td><%= f.input :warranty_css, label: false %></td><td><%= f.select :warranty_method,options_for_select(@wr_arr,@search_site.warranty_method) %></td><td><%= f.input :warranty_split, label: false %></td></tr>
   </tbody>
   </table>
 </div>

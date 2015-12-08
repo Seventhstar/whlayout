@@ -22,6 +22,8 @@ class SearchSitesController < ApplicationController
 
   # GET /search_sites/1/edit
   def edit
+    @wr_arr = {'На отдельной странице' => 'page','После разделителя' => 'split', 'Последний элемент' => 'last'}
+    @id_arr = {'В ссылке' => 'link', 'В стиле' => 'css', 'Аттрибут с разделителем' => 'field', 'Аттрибут названия' => 'title' }
   end
 
   # POST /search_sites
