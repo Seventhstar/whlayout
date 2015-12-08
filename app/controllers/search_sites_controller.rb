@@ -72,6 +72,6 @@ class SearchSitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def search_site_params
-      params.require(:search_site).permit(:name,:items,:id_method,:id_field,:id_split,:title,:link_pref,:detail,:href,:price,:cookie,:warranty_css,:warranty_method,:warranty_split)
+      params.require(:search_site).permit(:name,:items,:id_method,:id_field,:id_split,:title,:link_pref,:detail,:href,:price,:cookie,:warranty_css,:warranty_method,:warranty_split, :disabled)
     end
 end

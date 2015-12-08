@@ -33,6 +33,12 @@
  $cell.removeClass('app_cancel')
  $cell.html '<span class="icon edit" item_id="'+item_id+'"></span><span class="icon delete" item_id="'+item_id+'"></span>' 
 
+@apply_opt_change = (item)->
+  model = item.closest('table').attr('model')
+  item_id = item.attr('item_id')
+  inputs = $('input[name^=upd]')
+  upd_param(inputs.serialize()+'&model='+model+'&id='+item_id)  
+
 $(document).ready ->
 
 # редактирование данных в таблице
@@ -63,10 +69,23 @@ $(document).ready ->
    $('.container').on 'click', 'span.icon_cancel', ->   
      disable_input()
 
+   $('body').on 'keyup', '.editable input', (e) ->
+      if e.keyCode == 13
+        apply_opt_change($('span.icon_apply'))
+      return
    # отправка новых данных
    $('.container').on 'click', 'span.icon_apply', ->  
-     model = $(this).closest('table').attr('model')
-     item_id = $(this).attr('item_id')
-     inputs = $('input[name^=upd]')
-     upd_param(inputs.serialize()+'&model='+model+'&id='+item_id)
+     apply_opt_change($(this))
+
+   $('body').on 'keyup keypress', '.simple_options_form',(e) ->
+    code = e.keyCode or e.which
+    if code == 13
+      e.preventDefault()
+      if e.type == 'keyup'
+        $('#btn-send').trigger('click');
+        
+        return
+      return false
+    return
+
      

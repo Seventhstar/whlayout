@@ -1,7 +1,7 @@
 <div class="col-md-8 option_content">
 
 <div class="sep_05"></div>
-<%= form_for(@item) do |f| %>
+<%= form_for(@item, :html => {:class => 'simple_options_form'}) do |f| %>
 <div class="itemAdd_form">
 <label class="left"><%= new_item_header(@item.class.name) %>:</label>
 <div class="inp left"><%= f.text_field :name, :class => 'txt' %><span class="sub btn btn-min btn-success right" id="btn-send"> Добавить</span></div>
