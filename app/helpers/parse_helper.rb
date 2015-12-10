@@ -2,7 +2,9 @@ require 'open-uri'
 require 'nokogiri'
 require 'openssl'
 
-#OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+# устраняет ошибку certificate B: certificate verify failed
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
 module ParseHelper
 
   def detail_from_link(link,css, css2, cookie = nil)
@@ -50,6 +52,7 @@ module ParseHelper
         pg = open(url)  
       end
     rescue Exception => e
+      puts "site: " + site.name,e
       showings = {}
       hash_params = { link: '', title: 'ошибка: '+ url, price: 0, detail:'', warranty: '', site: site.name}
       showings.store( site.id, hash_params)
