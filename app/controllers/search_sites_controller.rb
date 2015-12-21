@@ -1,5 +1,6 @@
 class SearchSitesController < ApplicationController
   before_action :set_search_site, only: [:show, :edit, :update, :destroy]
+  before_action :set_arr, only: [:new,:edit]
 
   # GET /search_sites
   # GET /search_sites.json
@@ -22,8 +23,6 @@ class SearchSitesController < ApplicationController
 
   # GET /search_sites/1/edit
   def edit
-    @wr_arr = {'На отдельной странице' => 'page','После разделителя' => 'split', 'Последний элемент' => 'last'}
-    @id_arr = {'В ссылке' => 'link', 'В стиле' => 'css', 'Аттрибут с разделителем' => 'field', 'Аттрибут названия' => 'title' }
   end
 
   # POST /search_sites
@@ -75,5 +74,10 @@ class SearchSitesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def search_site_params
       params.require(:search_site).permit(:name,:items,:id_method,:id_field,:id_split,:title,:link_pref,:detail,:href,:price,:cookie,:warranty_css,:warranty_method,:warranty_split, :disabled)
+    end
+
+    def set_arr
+      @wr_arr = {'На отдельной странице' => 'page','После разделителя' => 'split', 'Последний элемент' => 'last'}
+      @id_arr = {'В ссылке' => 'link', 'В стиле' => 'css', 'Аттрибут с разделителем' => 'field', 'Аттрибут названия' => 'title' }
     end
 end

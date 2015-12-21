@@ -10,7 +10,7 @@ class SearchUrlsController < ApplicationController
     @sites = SearchSite.all
 
     @site = params[:url_sites]
-    @cathegory = params[:url_category]
+    @cathegory = params[:url_category]    
     if params[:url_sites] && (params[:url_sites].to_i > 0)
       @search_urls = @search_urls.where(:site=>params[:url_sites])
     end
@@ -27,6 +27,8 @@ class SearchUrlsController < ApplicationController
 
   # GET /search_urls/new
   def new
+    @cathegory = params[:cat]
+    @site = params[:site]
     @search_url = SearchUrl.new
     @sites = SearchSite.all
     @categories =SearchCategory.all
@@ -36,6 +38,8 @@ class SearchUrlsController < ApplicationController
   def edit
     @sites = SearchSite.all
     @categories =SearchCategory.all
+    @cathegory = @search_url.search_category_id
+    @site = @search_url.search_site_id
   end
 
   # POST /search_urls

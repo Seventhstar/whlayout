@@ -3,17 +3,28 @@
   <div class="form-inputs">
     
     
-    <%= f.select :search_site_id, content_tag(:option,'Сайт...',:value=>nil)+options_for_select(@sites.collect{ |u| [u.name, u.id] }, @search_url.search_site_id) %>
-    <%= f.select :search_category_id, content_tag(:option,'Категория...',:value=>nil)+options_for_select(@categories.collect{ |u| [u.name, u.id] }, @search_url.search_category_id) %>
+    <%= f.select :search_site_id, content_tag(:option,'Сайт...',:value=>nil)+options_for_select(@sites.collect{ |u| [u.name, u.id] }, @site) %>
+    <%= f.select :search_category_id, content_tag(:option,'Категория...',:value=>nil)+options_for_select(@categories.collect{ |u| [u.name, u.id] }, @cathegory) %>
+    <div class="right">
+
+      <div class="inp_btn checkbox active"><%= f.check_box :disabled %></div><label>Отключить</label>
+    </div>
+    
     <%= f.text_area :url, :class => 'w80 margin_top_20'  %>
     <span class="copy">Copy</span>
+    <% if !@search_url.site.nil? %>
+      <%= link_to image_tag(@search_url.site.name+".ico"),@search_url.url, target:"_blank" %>
+    <% end -%>
 
   </div>
-  <div class="inp_btn checkbox active"><%= f.check_box :disabled %></div>Отключить</label>
+  
 </br>
   <div class="form-actions">
     <%= f.button :submit, "Записать", class: 'btn-success' %>
+    <%= link_to 'Отмена', search_urls_path, :class => "sub btn_a btn_reset"%>
   </div>
 
 
 <% end %>
+
+
