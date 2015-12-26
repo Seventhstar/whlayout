@@ -9,16 +9,14 @@ module ParseHelper
 
   def detail_from_link(link,css, css2, cookie = nil)
     
-
+    _link = link.gsub('//','/').gsub(':/','://')
     begin
       if !cookie.empty?
-          _link = link.gsub('//','/').gsub(':/','://')
           response = Net::HTTP.get_response(URI.parse(_link),'Cookie' => cookie)
           pg = open(_link,'Cookie' => cookie)
       else
-          _link = link
-          response = Net::HTTP.get_response(URI.parse(link)) 
-          pg = open(link)
+          response = Net::HTTP.get_response(URI.parse(_link)) 
+          pg = open(_link)
       end
     rescue Exception => e
         puts _link, "cookie: " + cookie
@@ -34,6 +32,8 @@ module ParseHelper
     #p detail.class.to_s
     detail = detail.text if detail.class.to_s != 'String'
     detail = detail.gsub(/Срок окончания гарантии:/,'')
+    detail = detail.gsub(/Показать телефон/,'')
+    detail = detail.gsub(/Написать сообщение/,'')
     detail = detail.gsub(/Гарантия:/,'')
     detail
   end
@@ -78,7 +78,9 @@ module ParseHelper
       title = item.css(site.href) if title.empty?
       next if title.empty?
       
-      link_pref = 'http://'+url.split('//')[1].split('/')[0]
+      link_pref = site.link_pref
+      link_pref.chomp('/')
+      link_pref = 'http://'+url.split('//')[1].split('/')[0] if link_pref.nil?
 
       link = title.attr('href')
       link = item.css(site.href).attr('href') if link.nil?
