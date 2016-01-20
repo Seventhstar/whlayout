@@ -54,6 +54,7 @@ module ParseHelper
     rescue Exception => e
       puts "site: " + site.name,e
       showings = {}
+      url = url[0..100]+' ...' if url.length>100
       hash_params = { link: '', title: 'ошибка: '+ url, price: 0, detail:'', warranty: '', site: site.name}
       showings.store( site.id, hash_params)
       return showings
@@ -75,8 +76,11 @@ module ParseHelper
       next if !site.disabled.nil? && !site.disabled.empty? && !item.css(site.disabled).empty?
       
       title = item.css(site.title)
+      #p "title", title
       title = item.css(site.href) if title.empty?
       next if title.empty?
+
+
       
       link_pref = site.link_pref
       link_pref.chomp('/')
@@ -115,6 +119,7 @@ module ParseHelper
         hash_params[:title] = hash_params[:detail]
       end
 
+      
 
       if !name.nil? && !name.empty?
          words=add_words=sub_words=nil

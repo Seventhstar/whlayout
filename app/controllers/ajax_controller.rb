@@ -1,11 +1,10 @@
 class AjaxController < ApplicationController
 
-
   def check_status
-    #p "current_user.progress",current_user.progress
-    #render :show
-    #current_user.progress
-    #render  #:nothing => true
+    # p "current_user.progress",current_user.progress
+    # render :show
+    # current_user.progress
+    # render  #:nothing => true
     current_user
     #render :json => @user.progress
     #render  :nothing => true

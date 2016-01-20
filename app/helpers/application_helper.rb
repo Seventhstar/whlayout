@@ -83,8 +83,8 @@ module ApplicationHelper
   end
 
   def short_name(txt)
-  	if txt.length >130
-  		txt[0..130]+' ...'
+  	if txt.length >100
+  		txt[0..100]+' ...'
   	else
   		txt
   	end
