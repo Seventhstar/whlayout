@@ -55,7 +55,7 @@ module ParseHelper
       puts "site: " + site.name,e
       showings = {}
       url = url[0..100]+' ...' if url.length>100
-      hash_params = { link: '', title: 'ошибка: '+ url, price: 0, detail:'', warranty: '', site: site.name}
+      hash_params = { link: url, title: 'ошибка: '+ url, price: 0, detail:'', warranty: '', site: site.name}
       showings.store( site.id, hash_params)
       return showings
     end
